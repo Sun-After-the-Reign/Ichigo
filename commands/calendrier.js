@@ -78,6 +78,8 @@ module.exports = {
       context.fillText(event_data[2], marge_x, pos_text_y + marge_eventdata_y * 2)
       context.fillText(event_data[3], marge_x, pos_text_y + marge_eventdata_y * 3)
 
+      console.log(event_data)
+
       context.font = '62px Franklin'
       context.fillText("Organisé par", marge_x, pos_text_y + marge_eventdata_y * 4)
       context.drawImage(await Canvas.loadImage('./medias/calendrier/ORGA/' + event_data[4].split("Organisé par ")[1] + '.png'), marge_orga_x, (pos_text_y + marge_eventdata_y * 4) - 59)
