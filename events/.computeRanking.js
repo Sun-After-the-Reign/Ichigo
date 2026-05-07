@@ -53,13 +53,8 @@ module.exports = {
       }
     }
 
-    var items = Object.keys(classement).map(function (blader) {
-      point_avg = classement[blader]["points"] / (classement[blader]["W"] + classement[blader]["L"])
-      winrate = classement[blader]["W"] / (classement[blader]["W"] + classement[blader]["L"])
-      winscore = winrate + (point_avg / 100)
-      punish = 1 / (1 + (Math.floor(tournaments.length/1.25)+2) * (1 / (classement[blader]["participations"] * point_avg)))
-      score = (punish * winscore * 100000).toFixed()
-      return [blader, score, point_avg, classement[blader]]
+    var items = Object.keys(classement).map(function (blader) { 
+      // t'auras rien Yoyo pour cette saison
     })
 
     items.sort(function (a, b) { return a[1] != b[1] ? b[1] - a[1] : a[2] != b[2] ? b[2] - a[2] : a[3]["participations"] != b[3]["participations"] ? b[3]["participations"] - a[3]["participations"] : b[0] - a[0] })

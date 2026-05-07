@@ -2,8 +2,8 @@ const Discord = require("discord.js")
 
 module.exports = {
 
-  name: "say",
-  description: "Send back what you say",
+  name: "repete",
+  description: "Renvoie un texte",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
   category: "Utilitaire",
@@ -11,7 +11,7 @@ module.exports = {
     {
       type: "string",
       name: "text",
-      description: "The text you want the bot to say back",
+      description: "Le texte à renvoyer",
       required: true,
       autocomplete: false,
     }
@@ -19,6 +19,6 @@ module.exports = {
 
   async run(bot, message, args) {
     await message.channel.send(args.get("text").value)
-    return await message.reply({content: "Done.", ephemeral: true})
+    return await message.reply({content: "C'est bon.", ephemeral: true})
   }
 }
