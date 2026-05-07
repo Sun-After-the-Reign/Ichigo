@@ -3,6 +3,7 @@ const config = require("./config.json")
 const tmi = require('tmi.js')
 const bot = new Discord.Client({intents: 3276799})
 const fs = require("fs")
+const { request } = require('undici')
 
 bot.commands = new Discord.Collection()
 bot.color = "BEF0ED"
