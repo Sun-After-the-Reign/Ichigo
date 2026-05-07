@@ -67,10 +67,7 @@ module.exports = {
 
     if (args.get("date")){     
       let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
-      new cron.CronJob(datetime, () => { 
-        console.log("nouvo msg")
-        message.channel.send({content : content, files : medias})     
-      }).start()
+      new cron.CronJob(datetime, () => { message.channel.send({content : content, files : medias})} ).start()
       return await message.reply({ content: `C'est bon, le message sera envoyé le __<t:${Math.floor(datetime) / 1000}:d> à <t:${Math.floor(datetime) / 1000}:T> (<t:${Math.floor(datetime) / 1000}:R>)__.`, ephemeral: true })
     } else {
       await message.channel.send({ content: content, files: medias })
