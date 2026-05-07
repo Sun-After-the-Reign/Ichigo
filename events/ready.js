@@ -37,7 +37,8 @@ module.exports = async bot => {
 
   bot.db = new Sequelize({
     dialect: "sqlite",
-    storage: "./ichigo.db"
+    storage: "./ichigo.db",
+    logging: false,
   })
 
   bot.Tournaments = bot.db.define("tournament", {

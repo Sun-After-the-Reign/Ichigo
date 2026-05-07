@@ -20,11 +20,6 @@ module.exports = {
     let players = tournament.dataValues.tournament_ruleset == "3vs3" ? challonge.participants_count*3 : tournament.dataValues.tournament_ruleset == "2vs2" ? challonge.participants_count*2 : challonge.participants_count
     let users = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     
-    let participants = tournament.dataValues.tournament_participants == "challonge" ? players : tournament.dataValues.tournament_participants == "auto" ? users.length : tournament.dataValues.tournament_participants
-    let participants2 = players + " ("+ users.length+" pré-inscrits)"
-
-    if (tournament.dataValues.tournament_status == "Inscriptions en cours") participants2 = users.length + " pré-inscrits"
-
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
@@ -40,7 +35,6 @@ module.exports = {
         { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
         { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge.url },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
-        { name: ':small_orange_diamond: Participants', value: participants2.toString(), inline: true },
       )
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 
@@ -49,6 +43,7 @@ module.exports = {
       third = /^[0-9]*$/.test(tournament.dataValues.tournament_third) ? `<@${tournament.dataValues.tournament_third}>` : tournament.dataValues.tournament_third 
 
       embed.addFields(
+        { name: ':small_orange_diamond: Participants', value: players.toString(), inline: true },
         { name: '\u200B', value: '\u200B' },
         { name: ':trophy: Résultats', value: '\u200B' },
         { name: ':first_place: ', value: first, inline: true },
@@ -59,13 +54,14 @@ module.exports = {
 
     let row = new Discord.ActionRowBuilder().addComponents(
       new Discord.ButtonBuilder()
-        .setCustomId(`tournament-join-${tournament.dataValues.tournament_id}`)
-        .setLabel("Je participe !")
-        .setStyle(Discord.ButtonStyle.Success),
+        .setLabel("Challonge")
+        .setStyle(Discord.ButtonStyle.Link)
+        .setURL("https://challonge.com/" + challonge.url),
       new Discord.ButtonBuilder()
-        .setCustomId(`tournament-leave-${tournament.dataValues.tournament_id}`)
-        .setLabel("Je ne participe plus.")
-        .setStyle(Discord.ButtonStyle.Danger)
+        .setLabel("Recevoir les notifications")
+        .setStyle(Discord.ButtonStyle.Primary)
+        .setEmoji('🔔')
+        .setCustomId(`tournament-notify-${tournament.dataValues.tournament_id}`)
     )
 
     if (!update) return await channel.send({ content: "", embeds: [embed], components: [row]})

@@ -130,36 +130,39 @@ module.exports = {
         let challonge = ""
 
         if (args.get("format").value != "Training"){
-        
-          let data = {
-            api_key: bot.challonge,
-            "tournament[name]": args.get("title").value,
-            "tournament[tournament_type]": args.get("format").value == "Double Élimination" ? "double elimination" : "single elimination",
-            "tournament[url]": tournament_id,
-            "tournament[description]": `<p>${args.get("description").value.replaceAll("\\n", "\n")}</p><br><p>Règlement : ${args.get("ruleset").value} (<a href="https://drive.google.com/file/d/1agZf01RlWYBnfRjCcysJJct4mCZVLnIb/view?usp=drive_link" rel="nofollow">plus de détails ici</a>)</p><p>Format : ${args.get("format").value}</p><p>Horaire : Le ${date.getDate()} ${["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"][date.getMonth()]} à partir de ${date.toTimeString().substr(0, 5).replace(':', 'h')}</p><p>Localisation : ${place.dataValues.place_name}, ${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, ${place.dataValues.place_city}</p>` + (place.dataValues.place_access ? `<p>Accès : ${place.dataValues.place_access}</p>` : "") + `<br><p>Toutes les informations sont disponibles sur notre <a href="https://discord.gg/afEvCBF9XR" rel="nofollow">Discord</a>.</p>`,
-            "tournament[open_signup]": "false",
-            "tournament[accept_attachments]": "false",
-            "tournament[show_rounds]": "true",
-            "tournament[start_at]": new Date(date),
-            "tournament[game_id]": "337197",
-            "tournament[notify_users_when_matches_open]": "false",
-            "tournament[notify_users_when_the_tournament_ends]": "false",
-            "tournament[ranked_by]": "match wins",
-            "tournament[hide_forum]": "true",
-            "tournament[allow_participant_match_reporting]": "false",
-            "tournament[allow_participant_match_reporting]": "false",
-            "tournament[public_predictions_before_start_time]": "false",
-            "tournament[predict_the_losers_bracket]": "false",
-            "tournament[hide_bracket_preview]": "true",
-            "optional_display_data": { "show_standings":	"1", "show_announcements": "true" },
-          }
-            
-          let body = new URLSearchParams()
-          for (key in data) { body.append(key, data[key]) }
-      
-          let req = await fetch("https://api.challonge.com/v1/tournaments.json", { method: "POST", body: body, headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
-          let json = await req.json()
-          challonge = json.tournament.id
+
+          let myHeaders = new Headers()
+          myHeaders.append("Accept", "application/json")
+          myHeaders.append("Authorization-Type", "v1")
+          myHeaders.append("Authorization", bot.challonge)
+          myHeaders.append("Content-Type", "application/vnd.api+json")
+
+          let raw = JSON.stringify({
+            "data": {
+              "type": "tournament",
+              "attributes": {
+                "name": args.get("title").value,
+                "url": tournament_id,
+                "tournament_type": args.get("format").value == "Double Élimination" ? "double elimination" : "single elimination",
+                "game_name": "Beyblade X",
+                "starts_at": new Date(date).toDateString(),
+                "description": `<p>${args.get("description").value.replaceAll("\\n", "\n")}</p><br><p>Règlement : ${args.get("ruleset").value} (<a href="https://drive.google.com/file/d/1agZf01RlWYBnfRjCcysJJct4mCZVLnIb/view?usp=drive_link" rel="nofollow">plus de détails ici</a>)</p><p>Format : ${args.get("format").value}</p><p>Horaire : Le ${date.getDate()} ${["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"][date.getMonth()]} à partir de ${date.toTimeString().substr(0, 5).replace(':', 'h')}</p><p>Localisation : ${place.dataValues.place_name}, ${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, ${place.dataValues.place_city}</p>` + (place.dataValues.place_access ? `<p>Accès : ${place.dataValues.place_access}</p>` : "") + `<br><p>Toutes les informations sont disponibles sur notre <a href="https://discord.gg/afEvCBF9XR" rel="nofollow">Discord</a>.</p>`,
+                "registration_options": { "open_signup": true },
+                "station_options": { "auto_assign": true },
+              }
+            }
+          })
+
+          let requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          }         
+
+          let res = await fetch("https://api.challonge.com/v2.1/tournaments.json?community_id=sunafterthereign", requestOptions)
+          let data = await res.json()
+          challonge = data.data.id
         }
 
         if (args.get("date_pub")){   

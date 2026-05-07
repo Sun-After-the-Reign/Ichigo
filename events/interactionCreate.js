@@ -33,7 +33,11 @@ module.exports = async (bot, interaction) => {
   else if (interaction.isButton()){
     if (interaction.customId.startsWith("tournament-join")) require("./.formInscription.js").run(bot, interaction)
     if (interaction.customId.startsWith("tournament-leave")) require("./.addInscription.js").run(bot, interaction)
-
+    if (interaction.customId.startsWith("tournament-notify")){
+      let tournament = await bot.Tournaments.findOne({ where: { tournament_id: interaction.customId.split('-')[2] } })
+      interaction.member.roles.add(tournament.dataValues.tournament_role)
+      await interaction.reply({ content: "Tu recevras desormais les notifications liées à ce tournoi.", ephemeral: true })
+    }  
 
     if (interaction.customId.startsWith("watchlist")) {
       let count = parseInt(interaction.message.embeds[0].description.split(": ")[1])
