@@ -5,7 +5,7 @@ const { google } = require("googleapis")
 module.exports = {
 
   name: "maj-classement",
-  description: "Mets à jour le classement.",
+  description: "Mets à jour le classement",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Classement",

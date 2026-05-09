@@ -40,7 +40,7 @@ module.exports = {
 
       await categories.sort().forEach(async cat => {
         let commands = bot.commands.filter(cmd => cmd.category === cat)
-        embed.addFields({name: `${cat}`, value: `${commands.map(cmd => `\`${cmd.name}\` : ${cmd.description}`).join("\n")}`})
+        embed.addFields({name: `${cat}`, value: `${commands.map(cmd => `\`${cmd.name}\` ${cmd.permission ? "(admin) " : ""}: ${cmd.description}`).join("\n")}`})
       })
 
     } else {
