@@ -110,7 +110,7 @@ module.exports = {
     let medias = []
     let date = args.get("date") ? new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2]) : ""
 
-    if(args.get("ping")) content += `-# <@&${args.get("ping").value}>\n`
+    if(args.get("ping")) content += `-# <@&${args.get("ping").value}> - Annonce Tournoi\n`
 
     if(args.get("nom")) content += `## :trophy: ${args.get("nom").value.toUpperCase()} :trophy:` + "\n"
 
