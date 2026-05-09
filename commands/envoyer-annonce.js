@@ -7,7 +7,7 @@ module.exports = {
   description: "Envoie une annonce",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Utilitaire",
+  category: "Message",
   options: [
     {
       type: "string",

@@ -6,7 +6,7 @@ module.exports = {
   description: "Renvoie un texte",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
-  category: "Utilitaire",
+  category: "Message",
   options: [
     {
       type: "string",

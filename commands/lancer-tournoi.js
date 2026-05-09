@@ -7,7 +7,7 @@ module.exports = {
   description: "Lance un tournoi sur Twitch",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
-  category: "Utilitaire",
+  category: "Tournoi",
   options: [
     {
       type: "string",

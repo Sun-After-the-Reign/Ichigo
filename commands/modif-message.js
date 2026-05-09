@@ -6,7 +6,7 @@ module.exports = {
   description: "Modifie un message avec un texte",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Utilitaire",
+  category: "Message",
   options: [
     {
       type: "string",

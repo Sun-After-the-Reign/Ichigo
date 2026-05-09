@@ -9,7 +9,7 @@ module.exports = {
   description: "Envoie un embed avec un tournoi",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Utilitaire",
+  category: "Tournoi",
   options: [
     {
       type: "string",
