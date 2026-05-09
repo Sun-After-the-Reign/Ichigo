@@ -6,7 +6,7 @@ const { contentwarehouse_v1 } = require("googleapis")
 module.exports = {
 
   name: "envoyer-tournoi",
-  description: "Envoie un embed avec un tournoi",
+  description: "Envoie une annonce d'un tournoi",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Tournoi",
