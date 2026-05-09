@@ -29,7 +29,7 @@ module.exports = {
     .setColor(bot.color)
     .setThumbnail(bot.user.displayAvatarURL({dynamic: true}))
     .setTimestamp()
-    .setFooter({text: 'un bot par @shishi4272', iconURL: 'https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png'})
+    .setFooter({text: 'BOT par @shishi4272', iconURL: 'https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png'})
 
     if (!command){
 
