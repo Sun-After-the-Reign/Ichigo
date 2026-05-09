@@ -30,7 +30,7 @@ module.exports = async (bot, interaction) => {
     if (interaction.customId.startsWith("tournament-notify")){
       let tournament = await bot.Tournaments.findOne({ where: { tournament_id: interaction.customId.split('-')[2] } })
       interaction.member.roles.add(tournament.dataValues.tournament_role)
-      await interaction.reply({ content: "Tu recevras desormais les notifications liées à ce tournoi.", ephemeral: true })
+      await interaction.reply({ content: "Tu recevras désormais les notifications liées à ce tournoi.", ephemeral: true })
     }  
   }
 }
