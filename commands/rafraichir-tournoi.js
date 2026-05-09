@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 module.exports = {
 
   name: "rafraichir-tournoi",
-  description: "Rafraichit les tournois sur le serveur",
+  description: "Rafraichit les embed de tournois",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Tournoi",

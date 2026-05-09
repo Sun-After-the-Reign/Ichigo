@@ -5,7 +5,7 @@ const cron = require("cron")
 module.exports = {
 
   name: "ajout-tournoi",
-  description: "Create a new tournament on the server",
+  description: "Créer un nouveau tournoi sur le serveur",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Tournoi",

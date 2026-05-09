@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 module.exports = {
 
   name: "sondage",
-  description: "Ajoute des emojis sur un message pour sondage",
+  description: "Créer un sondage avec des emojis",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Utilitaire",
