@@ -1,7 +1,5 @@
 const Discord = require("discord.js")
-const { fetch } = require('undici')
 const cron = require("cron")
-const { contentwarehouse_v1 } = require("googleapis")
 
 module.exports = {
 

@@ -1,9 +1,10 @@
 const Discord = require("discord.js")
 const config = require("./config.json")
 const tmi = require('tmi.js')
-const bot = new Discord.Client({intents: 3276799})
 const fs = require("fs")
 const { request } = require('undici')
+
+const bot = new Discord.Client({intents: 3276799})
 
 bot.commands = new Discord.Collection()
 bot.color = "BEF0ED"
@@ -49,9 +50,7 @@ async function checkMatches() {
     if (oldMatch.state != "complete" && match.state == "complete") { bot.twitch_client.say("sunafterthereign", `${bot.participants.get(match.winner_id)} 4-${Math.min(...match.scores_csv.split("-").map(Number))} ${bot.participants.get(match.loser_id)}`).catch(err => console.log(err)) }
 
     bot.knownMatches.set(match.id, match)
-
   })
-
 }
  
 bot.on("check", () => { 
