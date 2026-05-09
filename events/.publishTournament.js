@@ -33,11 +33,11 @@ module.exports = {
 			msg += `:map: Lieu : ${place.dataValues.place_name}, ${place.dataValues.place_city}` + "\n"
 			msg += `:bar_chart: Format : ${tournament.dataValues.tournament_format}` + "\n"
 			msg += `:scroll: Règlement : ${tournament.dataValues.tournament_ruleset}` + "\n"
-			msg += `:globe_with_meridians: Lien : ${bot.url}` + "\n"
+			msg += `:globe_with_meridians: Lien : ${"https://challonge.com/" + tournament.dataValues.tournament_id }` + "\n"
 
 			msg += "\n"
 
-			msg += `-# Merci d'indiquer votre participation dans ${place.dataValues.place_inscr} afin que nous puissions, au mieux, estimer la taille du tournoi.`
+			msg += `-# Merci d'indiquer votre participation sur le Challonge afin que nous puissions estimer au mieux la taille du tournoi.`
 
 			await channel.send({content : msg, files : medias})
 			return await bot.Tournaments.update({ tournament_published: "true"}, { where: { tournament_id: tournament.dataValues.tournament_id }})
