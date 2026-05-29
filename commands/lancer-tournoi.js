@@ -20,6 +20,10 @@ module.exports = {
 
   async run(bot, message, args) {
 
+    bot.knownMatches = new Map()
+    bot.participants = new Map()
+    bot.interval = null
+
     await message.deferReply({ ephemeral: true })
 
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: args.get("tournament_id").value.split(" - ")[0] } })
@@ -29,10 +33,31 @@ module.exports = {
 
     await participants.forEach(item => { bot.participants.set(item.participant.id, item.participant.name) })
 
-    bot.suivi = tournament.dataValues.tournament_challonge
-
-    bot.emit("check")
+    await checkMatches(bot, tournament.dataValues.tournament_challonge)
+    bot.interval = setInterval(() => checkMatches(bot, tournament.dataValues.tournament_challonge), 1000 * 60 * 5)
+    setTimeout(function () { clearInterval(bot.interval) }, 1000 * 3600 * 8)
 
     return await message.editReply({content: "Done.", ephemeral: true})
   }
+}
+
+async function checkMatches(bot, tournament_id) {
+
+  let req = await request(`https://api.challonge.com/v1/tournaments/${tournament_id}/matches.json?api_key=${bot.challonge}`)
+  let currentMatches = await req.body.json()
+
+  currentMatches.forEach(item => {
+    let match = item.match
+
+    if (!bot.knownMatches.has(match.id)) {
+      bot.knownMatches.set(match.id, match)
+      return
+    }
+
+    let oldMatch = bot.knownMatches.get(match.id)
+    if (oldMatch.state != "complete" && match.state == "complete") { 
+      bot.twitch_client.say("sunafterthereign", `${bot.participants.get(match.winner_id)} 4-${Math.min(...match.scores_csv.split("-").map(Number))} ${bot.participants.get(match.loser_id)}`).catch(err => console.log(err))
+      bot.knownMatches.set(match.id, match)
+    }
+  })
 }
