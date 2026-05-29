@@ -130,13 +130,7 @@ module.exports = {
         let challonge = ""
 
         if (args.get("format").value != "Training"){
-
-          let myHeaders = new Headers()
-          myHeaders.append("Accept", "application/json")
-          myHeaders.append("Authorization-Type", "v1")
-          myHeaders.append("Authorization", bot.challonge)
-          myHeaders.append("Content-Type", "application/vnd.api+json")
-
+        
           let raw = JSON.stringify({
             "data": {
               "type": "tournament",
@@ -151,14 +145,9 @@ module.exports = {
                 "station_options": { "auto_assign": true },
               }
             }
-          })
+          })    
 
-          let requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          }         
+          let requestOptions = { method: 'POST', headers: bot.myHeaders, body: raw, redirect: 'follow' } 
 
           let res = await fetch("https://api.challonge.com/v2.1/tournaments.json?community_id=sunafterthereign", requestOptions)
           let data = await res.json()

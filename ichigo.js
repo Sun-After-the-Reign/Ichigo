@@ -6,8 +6,7 @@ const { request } = require('undici')
 
 const bot = new Discord.Client({intents: 3276799})
 
-bot.commands = new Discord.Collection()
-bot.color = "BEF0ED"
+bot.color = "E54D00"
 bot.url = "https://discord.gg/afEvCBF9XR"
 
 bot.challonge = config.challonge
@@ -20,10 +19,7 @@ bot.knownMatches = new Map()
 bot.participants = new Map()
 bot.interval = null
 
-fs.readdirSync("./events/").filter(f => f.endsWith(".js") && !f.startsWith('.')).forEach(async file => {
-  let event = require(`./events/${file}`)
-  bot.on(file.split(".js").join(""), event.bind(null, bot))
-})
+fs.readdirSync("./events/").filter(file => file.endsWith(".js") && !file.startsWith('.')).forEach(async event_file => bot.on(event_file.split(".js").join(""), require(`./events/${event_file}`).bind(null, bot)))
 
 bot.login(config.token)
 

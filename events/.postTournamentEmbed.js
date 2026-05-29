@@ -33,7 +33,7 @@ module.exports = {
         { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
         { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
         { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
-        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge.url },
+        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + tournament.dataValues.tournament_id },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
       )
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
@@ -56,7 +56,7 @@ module.exports = {
       new Discord.ButtonBuilder()
         .setLabel("Challonge")
         .setStyle(Discord.ButtonStyle.Link)
-        .setURL("https://challonge.com/" + challonge.url),
+        .setURL("https://challonge.com/" + tournament.dataValues.tournament_id),
       new Discord.ButtonBuilder()
         .setLabel("Recevoir les notifications")
         .setStyle(Discord.ButtonStyle.Primary)
