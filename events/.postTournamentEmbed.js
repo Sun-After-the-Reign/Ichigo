@@ -22,9 +22,8 @@ module.exports = {
     
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
-      .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
+      .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL() })
       .setTitle(tournament.dataValues.tournament_name)
-      .setURL(bot.url)
       .setDescription(tournament.dataValues.tournament_desc)
       .setImage(tournament.dataValues.tournament_poster)
       .setFooter({text: `Merci de consulter le règlement avant de vous inscrire.`, iconURL: `${channel.guild.iconURL()}`})

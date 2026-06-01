@@ -10,7 +10,7 @@ module.exports = {
   options: [
     {
       type: "string",
-      name: "text",
+      name: "texte",
       description: "Le texte à renvoyer",
       required: true,
       autocomplete: false,
@@ -18,7 +18,7 @@ module.exports = {
   ],
 
   async run(bot, message, args) {
-    await message.channel.send(args.get("text").value)
+    await message.channel.send(args.get("texte").value)
     return await message.reply({content: "C'est bon.", ephemeral: true})
   }
 }
