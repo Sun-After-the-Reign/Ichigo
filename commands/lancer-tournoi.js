@@ -56,7 +56,7 @@ async function checkMatches(bot, tournament_id) {
 
     let oldMatch = bot.knownMatches.get(match.id)
     if (oldMatch.state != "complete" && match.state == "complete") { 
-      bot.twitch_client.say("sunafterthereign", `${bot.participants.get(match.winner_id)} 4-${Math.min(...match.scores_csv.split("-").map(Number))} ${bot.participants.get(match.loser_id)}`).catch(err => console.log(err))
+      bot.twitch_client.say(bot.twitch_channel, `${bot.participants.get(match.player1_id)} ${(match.scores_csv == "" || match.scores_csv == "0-0") ? match.player1_id == match.winner_id ? "0-DQ" : "DQ-0" : match.scores_csv} ${bot.participants.get(match.player2_id)}`).catch(err => console.log(err))
       bot.knownMatches.set(match.id, match)
     }
   })

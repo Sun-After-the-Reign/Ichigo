@@ -13,8 +13,8 @@ module.exports = async (bot, interaction) => {
     let places = await bot.Places.findAll()
 
     if (focusedOption.name === "tournament_id") { choices = tournaments.map(tournament => `${tournament.dataValues.tournament_id} - ${tournament.dataValues.tournament_name}`) }
-    if (focusedOption.name === "format") { choices = ["Double Élimination", "Simple Élimination", "Training"] }
-    if (focusedOption.name === "ruleset") { choices = ["3on3", "1on1", "3vs3", "Training"] }
+    if (focusedOption.name === "format") { choices = ["Double Élimination", "Simple Élimination", "Ronde Suisse", "Poules", "Training"] }
+    if (focusedOption.name === "ruleset") { choices = ["3on3", "1on1", "Team Battle", "Training"] }
     if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours"] }
     if (focusedOption.name === "place") { choices = places.map(place => place.dataValues.place_id) }
     if (focusedOption.name === "regle") { choices = Object.keys(bot.regles) }
