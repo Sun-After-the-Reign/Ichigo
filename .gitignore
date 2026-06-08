@@ -4,4 +4,5 @@ config.json
 dev_config.json
 ichigo.db
 test.js
-google.json
+google*.json
+.secretFormula.js

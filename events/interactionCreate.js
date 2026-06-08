@@ -19,6 +19,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "place") { choices = places.map(place => place.dataValues.place_id) }
     if (focusedOption.name === "regle") { choices = Object.keys(bot.regles) }
     if (focusedOption.name === "annonce") { choices = ["Rappel", "Guide", "Inscriptions"] }
+    if (focusedOption.name === "organization") { choices = ["SAtR", "SAtR Paris", "SAtR Marseille", "RPB", "RPB Paris", "RPB Nord"] }
 
     let filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()))
     if (!focusedOption.value) filtered = choices
