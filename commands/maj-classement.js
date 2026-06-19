@@ -123,13 +123,13 @@ async function computeRanking(bot, tournaments) {
 
         if (!participants.data.find(p => p.id == blader.participant_id)) break
             
-        if (match.attributes.winner_id == blader.participant_id) {
+        if ((match.attributes.winner_id == blader.participant_id) && (match.attributes.scores != "0 - 0")) {
           rankingData[participants.data.find(p => p.id == blader.participant_id).attributes.username]["W"] += 1
           rankingData[participants.data.find(p => p.id == blader.participant_id).attributes.username]["winpoints"] += 4
-        } else if (match.attributes.scores != "0 - 0"){
+        } else if ((match.attributes.winner_id != blader.participant_id) && (match.attributes.scores != "0 - 0")) {
           rankingData[participants.data.find(p => p.id == blader.participant_id).attributes.username]["L"] += 1
           rankingData[participants.data.find(p => p.id == blader.participant_id).attributes.username]["lostpoints"] += blader.scores[0]
-        } else rankingData[participants.data.find(p => p.id == blader.participant_id).attributes.username]["L"] += 1
+        } else if ((match.attributes.winner_id != blader.participant_id) && (match.attributes.scores == "0 - 0")) rankingData[participants.data.find(p => p.id == blader.participant_id).attributes.username]["L"] += 1
       }
     }
   }
