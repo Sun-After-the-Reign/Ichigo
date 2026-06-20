@@ -30,13 +30,13 @@ module.exports = {
 
       for (attachment of msg.attachments) {
         medias.push(attachment[1].url)
-        if (medias.length == 9){
-          await message.channel.send({content : "archive", files : medias})
+        if (medias.length == 10){
+          await message.channel.send(medias.join('\n'))
           medias = []
         }
       }
     }
-    await message.channel.send({ content: "archiving...", files: medias })
+    await message.channel.send(medias.join('\n'))
     return await message.editReply({ content: "C'est bon.", ephemeral: true })
   }
 }
