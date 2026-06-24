@@ -4,6 +4,4 @@ config.json
 dev_config.json
 ichigo.db
 test.js
-google*.json
-.secretFormula.js
-maj-classement.js
+options

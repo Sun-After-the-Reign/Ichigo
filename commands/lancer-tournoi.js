@@ -57,7 +57,7 @@ async function checkMatches(bot, tournament_id) {
       let blader1 = await bot.Bladers.findOne({ where: { blader_username: participation1.dataValues.participation_username } })
       let blader2 = await bot.Bladers.findOne({ where: { blader_username: participation2.dataValues.participation_username } })
 
-      bot.twitch_client.say(bot.twitch_channel, `${blader1.dataValues.blader_displayname} ${(match.attributes.scores == "" || match.attributes.scores == "0 - 0") ? match.attributes.points_by_participant[0].participant_id == match.attributes.winner_id ? "0-DQ" : "DQ-0" : match.attributes.scores.split(' ').join('')} ${blader2.dataValues.blader_displayname}`).catch(err => console.log(err))
+      bot.twitch_client.say(bot.twitch_channel, `${blader1.dataValues.blader_displayname} ${(match.attributes.scores == "0 - 0") ? match.attributes.points_by_participant[0].participant_id == match.attributes.winner_id ? "0-DQ" : "DQ-0" : match.attributes.scores.split(' ').join('')} ${blader2.dataValues.blader_displayname}`).catch(err => console.log(err))
       bot.knownMatches.set(match.id, match)
     }
   }

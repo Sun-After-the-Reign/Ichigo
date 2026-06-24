@@ -1,6 +1,6 @@
 {
   "name": "ichigo",
-  "version": "4.2.2",
+  "version": "4.3.0",
   "description": "Discord BOT for Sun After The Reign, a Beyblade X Community. ",
   "main": "ichigo.js",
   "scripts": {
