@@ -178,10 +178,46 @@ module.exports = async bot => {
       allowNull: true,
     },
   })
+  bot.Bladers = bot.db.define("blader", {
+    blader_username: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      primaryKey: true,
+      unique: true,
+    },
+    blader_displayname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    blader_clan: {
+      type: Sequelize.STRING,
+    },
+    blader_avatarurl: {
+      type: Sequelize.STRING,
+    },
+  })
+  bot.Participations = bot.db.define("participation", {
+    participation_id: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      primaryKey: true,
+      unique: true,
+    },
+    participation_tournament: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    participation_username: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+  })
 
   await bot.Tournaments.sync()
   await bot.Inscriptions.sync()
   await bot.Places.sync()
+  await bot.Bladers.sync()
+  await bot.Participations.sync()
   console.log("Database Online.")
 
   await slashcommands_loader(bot)
