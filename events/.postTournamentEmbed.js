@@ -5,8 +5,6 @@ module.exports = {
 
   async run(bot, tournament, update = false) {
 
-    console.log("POST TOURNAMENT EMBED")
-
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
     let channel = await bot.channels.fetch(place.dataValues.place_inscr.split('/')[5])
 
