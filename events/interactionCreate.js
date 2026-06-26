@@ -19,7 +19,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours"] }
     if (focusedOption.name === "place") { choices = places.map(place => place.dataValues.place_id) }
     if (focusedOption.name === "regle") { choices = Object.keys(bot.regles) }
-    if (focusedOption.name === "annonce") { choices = ["Rappel", "Guide", "Inscriptions"] }
+    if (focusedOption.name === "annonce") { choices = ["Rappel", "Guide", "Inscriptions", "Rappel2", "Guide2"] }
     if (focusedOption.name === "organization") { choices = fs.readdirSync("./options/").filter(file => file.endsWith(".js")).map(file => file.split(".js")[0]) }
 
     let filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()))
