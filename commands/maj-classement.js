@@ -65,7 +65,7 @@ async function fetchPerformanceData(bot, tournaments) {
   for (tournament of tournaments) {
 
     let request
-        let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' } 
+    let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' } 
 
     request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/matches.json?community_id=sunafterthereign", requestOptions)
     let matches = await request.json()

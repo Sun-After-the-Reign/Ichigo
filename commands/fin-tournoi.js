@@ -1,4 +1,5 @@
 const Discord = require("discord.js")
+const Canvas = require('@napi-rs/canvas')
 
 module.exports = {
 
@@ -45,9 +46,9 @@ module.exports = {
     },
     {
       type: "string",
-      name: "img_result",
-      description: "Image of the results of the tournament",
-      required: false,
+      name: "qr",
+      description: "Challonge QR",
+      required: true,
       autocomplete: false,
     },
     {
@@ -78,10 +79,7 @@ module.exports = {
   
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
-    let content = ""
-    let medias = []
-
-    if (args.get("img_result")) medias.push({ attachment: args.get("img_result").value })
+    let content = ""  
 
     content += `## ${tournament_updated.dataValues.tournament_name} (<t:${tournament_updated.dataValues.tournament_date}:d>) - **${tournament_updated.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament_updated.dataValues.tournament_id})` + "\n"
     content += `- :trophy: **1ʳᵉ place** - ${first.match(/^[0-9]{18}/) ? "<@" + first + ">" : first}` + "\n"
@@ -90,10 +88,82 @@ module.exports = {
     content += "\n"
     content += "Bravo à tous·tes !"
 
-    let channel = await message.guild.channels.fetch(args.get("post_result").value)
-    await channel.send({ content: content, files: medias })
+    Canvas.GlobalFonts.registerFromPath('./medias/top8/franklin.ttf', 'Franklin')
+
+    let canvas = Canvas.createCanvas(1110, 1110)
+    let context = canvas.getContext('2d')
+
+    let y_decal_base = 100
+    let x_decal_base = -45
+    let base_icon = [98, 208]
+    let base_info = [190, 242]
+    let base_info_modif = [0, 20, 36]
+    let base_clan = [989, 208]
+    let base_historic = [930, 230]
+    let rank = 1
+
+    context.drawImage(await Canvas.loadImage('./medias/top8/base.png'), 0, 0, 1110, 1110)
+
+    context.font = '36px Franklin'
+    context.fillStyle = '#ffffff'
+    context.fillText(tournament_updated.dataValues.tournament_name.toUpperCase(), 35, 175)
+
+    context.font = '16px Franklin'
+    context.fillStyle = '#7d7d7d'
+
+    let date = new Date(Math.floor(tournament_updated.dataValues.tournament_date) * 1000)
+    let place = await bot.Places.findOne({ where: { place_id: tournament_updated.dataValues.tournament_place } })
+
+    context.fillText(tournament_updated.dataValues.tournament_name + " - Sun After the Reign saison " + tournament_updated.dataValues.tournament_season, 35, 1040)
+    context.fillText(tournament_updated.dataValues.tournament_ruleset + " - " + tournament_updated.dataValues.tournament_format, 35, 1060)
+    context.fillText(String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear() + ' - ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + " à " + place.dataValues.place_name + ", " + place.dataValues.place_city, 35, 1080)
+
+    context.drawImage(await Canvas.loadImage(args.get("qr").value), 956, 33, 120, 120)
+
+    let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' } 
+    let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
+    let raw = await request.json()
+    let participants = { data: raw.data.filter(p => p.attributes.final_rank <= 8 && p.attributes.final_rank != null).sort((a, b) => a.attributes.final_rank != b.attributes.final_rank ? a.attributes.final_rank - b.attributes.final_rank : a.attributes.name - b.attributes.name) }
     
-    await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
+    context.fillStyle = '#ffffff'
+
+    for (let player of participants.data) {
+
+      let y_decal = (y_decal_base * (rank - 1))
+
+      let blader = await bot.Bladers.findOne({ where: { blader_username: player.attributes.username } })
+      try { context.drawImage(await Canvas.loadImage(blader?.dataValues.blader_avatarurl), base_icon[0], base_icon[1] + y_decal, 82, 82) } catch (err) { context.drawImage(await Canvas.loadImage("https://user-assets.challonge.com/misc/challonge_fireball_gray.png"), base_icon[0], base_icon[1] + y_decal, 82, 82) }
+      if (blader?.dataValues.blader_clan) context.drawImage(await Canvas.loadImage(`./medias/top10/Clans/${blader?.dataValues.blader_clan}.png`), base_clan[0], base_clan[1] + y_decal, 82, 82)
+    
+      request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_id + "/matches.json?community_id=sunafterthereign&participant_id=" + player.id, requestOptions)
+      let raw = await request.json()
+      let matches = { data: raw.data.filter(m => m.attributes.scores != "0 - 0") }
+
+      let winrate = matches.data.filter(m => m.attributes.winner_id == player.id).length / matches.data.length
+      let historics = matches.data.map(m => m.attributes.winner_id == player.id ? "W" : "L")
+      let points = matches.data.map(m => m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0] > 4 ? 4 : m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0]).reduce((a, b) => a + b, 0)
+
+      context.font = '36px Franklin'
+      context.fillText(blader ? blader.dataValues.blader_displayname.slice(0, 24) : player.attributes.name.slice(0, 24), base_info[0], base_info[1] + y_decal + base_info_modif[0])
+
+      context.font = '16px Franklin'
+      context.fillText((winrate * 100).toFixed(2) + "% WR", base_info[0], base_info[1] + y_decal + base_info_modif[1])
+      context.fillText((points / matches.data.length).toFixed(2) + " pts/match", base_info[0], base_info[1] + y_decal + base_info_modif[2])
+
+      let hist = 1
+
+      for (let historic of historics.reverse()) {
+        let x_decal = (x_decal_base * (hist - 1))
+        context.drawImage(await Canvas.loadImage(`./medias/top8/${historic}.png`), base_historic[0] + x_decal, base_historic[1] + y_decal)  
+        hist++
+      }
+      rank++
+    }
+
+    let channel = await message.guild.channels.fetch(args.get("post_result").value)
+    await channel.send({ content: content, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'top8.png' })] })
+    
+    // await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
 
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
