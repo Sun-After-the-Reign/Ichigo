@@ -15,7 +15,7 @@ module.exports = {
       challonge = body.tournament
     }
 
-    let players = tournament.dataValues.tournament_ruleset == "3vs3" ? challonge.participants_count*3 : tournament.dataValues.tournament_ruleset == "2vs2" ? challonge.participants_count*2 : challonge.participants_count
+    let players = tournament.dataValues.tournament_ruleset == "Team Battle" ? challonge.participants_count*3 : tournament.dataValues.tournament_ruleset == "2vs2" ? challonge.participants_count*2 : challonge.participants_count
     let users = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     
     let embed = new Discord.EmbedBuilder()
