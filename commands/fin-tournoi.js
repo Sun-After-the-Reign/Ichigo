@@ -163,7 +163,7 @@ module.exports = {
     let channel = await message.guild.channels.fetch(args.get("post_result").value)
     await channel.send({ content: content, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'top8.png' })] })
     
-    // await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
+    await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
 
     return await message.editReply({ content: "Done.", ephemeral: true })
   }

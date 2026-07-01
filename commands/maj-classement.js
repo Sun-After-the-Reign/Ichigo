@@ -108,9 +108,6 @@ async function fetchPerformanceData(bot, tournaments) {
   }
 
   return performanceData
-  
-  //var ranking = await Object.keys(performanceData).map((blader) => { return require(`../events/.secretFormula.js`).run(performanceData, blader, tournaments.length) })
-  //return ranking.sort(function (a, b) { return a["score"] != b["score"] ? b["score"] - a["score"] : a["participations"] != b["participations"] ? b["participations"] - a["participations"] : b["username"] - a["username"] })
 }
 
 async function cleanRanking(bot, auth, width, range) {
