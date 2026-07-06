@@ -133,7 +133,7 @@ module.exports = {
 
       let blader = await bot.Bladers.findOne({ where: { blader_username: player.attributes.username } })
       try { context.drawImage(await Canvas.loadImage(blader?.dataValues.blader_avatarurl), base_icon[0], base_icon[1] + y_decal, 82, 82) } catch (err) { context.drawImage(await Canvas.loadImage("https://user-assets.challonge.com/misc/challonge_fireball_gray.png"), base_icon[0], base_icon[1] + y_decal, 82, 82) }
-      if (blader?.dataValues.blader_clan) context.drawImage(await Canvas.loadImage(`./medias/top10/Clans/${blader?.dataValues.blader_clan}.png`), base_clan[0], base_clan[1] + y_decal, 82, 82)
+      if (blader?.dataValues.blader_clan) context.drawImage(await Canvas.loadImage(`./medias/clans/${blader?.dataValues.blader_clan}.png`), base_clan[0], base_clan[1] + y_decal, 82, 82)
     
       request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_id + "/matches.json?community_id=sunafterthereign&participant_id=" + player.id, requestOptions)
       let raw = await request.json()

@@ -24,11 +24,35 @@ module.exports = {
       required: false,
       autocomplete: false,
     },
+    {
+      type: "string",
+      name: "add_tournament",
+      description: "Option to add tournaments to the ranking",
+      required: false,
+      autocomplete: false,
+    },
   ],
 
   async run(bot, message, args) {
 
     await message.deferReply({ ephemeral: true })
+
+    if (args.get("add_tournament")){
+
+      for (let tournament of args.get("add_tournament").value.split(",")) {
+        let tournament_id = tournament
+
+        let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
+        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament_id + ".json?community_id=" + args.get("organization").value, requestOptions)
+        let challonge = await request.json()
+
+        await bot.Tournaments2.upsert({
+          tournament_id: tournament_id,
+          tournament_name: challonge.data.attributes.name,
+          tournament_challonge: challonge.data.id,
+        }, { where: { tournament_id: tournament_id } })
+      }
+    }
 
     const module = await import(`../options/${args.get("organization").value}.js`)
 
