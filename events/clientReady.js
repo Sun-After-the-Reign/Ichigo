@@ -114,26 +114,6 @@ module.exports = async bot => {
       type: Sequelize.STRING,
     },
   })
-  bot.Inscriptions = bot.db.define("inscription", {
-    inscription_id: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      primaryKey: true,
-      unique: true,
-    },
-    player_id: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    tournament_id: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    player_status: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-  })
   bot.Places = bot.db.define("place", {
     place_id: {
       type: Sequelize.STRING,
@@ -249,7 +229,6 @@ module.exports = async bot => {
   })
 
   await bot.Tournaments.sync()
-  await bot.Inscriptions.sync()
   await bot.Places.sync()
   await bot.Bladers.sync()
   await bot.Participations.sync()
