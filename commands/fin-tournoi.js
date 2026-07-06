@@ -89,6 +89,7 @@ module.exports = {
     content += "Bravo à tous·tes !"
 
     Canvas.GlobalFonts.registerFromPath('./medias/top8/franklin.ttf', 'Franklin')
+    Canvas.GlobalFonts.registerFromPath('./medias/top8/impact.ttf', 'Impact')
 
     let canvas = Canvas.createCanvas(1110, 1110)
     let context = canvas.getContext('2d')
@@ -96,7 +97,7 @@ module.exports = {
     let y_decal_base = 100
     let x_decal_base = -45
     let base_icon = [98, 208]
-    let base_info = [190, 242]
+    let base_info = [190, 246]
     let base_info_modif = [0, 20, 36]
     let base_clan = [989, 208]
     let base_historic = [930, 230]
@@ -143,7 +144,7 @@ module.exports = {
       let historics = matches.data.map(m => m.attributes.winner_id == player.id ? "W" : "L")
       let points = matches.data.map(m => m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0] > 4 ? 4 : m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0]).reduce((a, b) => a + b, 0)
 
-      context.font = '36px Franklin'
+      context.font = '36px Impact'
       context.fillText(blader ? blader.dataValues.blader_displayname.slice(0, 24) : player.attributes.name.slice(0, 24), base_info[0], base_info[1] + y_decal + base_info_modif[0])
 
       context.font = '16px Franklin'
