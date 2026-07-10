@@ -7,15 +7,6 @@ module.exports = {
 
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
     let channel = await bot.channels.fetch(place.dataValues.place_inscr.split('/')[5])
-
-    let challonge = tournament.dataValues.tournament_challonge
-    if (challonge) {
-      let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?api_key=${bot.challonge}`)
-      let body = await req.body.json()
-      challonge = body.tournament
-    }
-
-    let players = tournament.dataValues.tournament_ruleset == "Team Battle" ? challonge.participants_count*3 : tournament.dataValues.tournament_ruleset == "2vs2" ? challonge.participants_count*2 : challonge.participants_count
     
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
@@ -34,12 +25,21 @@ module.exports = {
       )
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 
+      let participantsNumber = "N/A"
+
+      if (tournament.dataValues.tournament_challonge) {
+        let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
+        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
+        let participants = await request.json()
+        participantsNumber = tournament.dataValues.tournament_ruleset == "Team Battle" ? participants.data.length * 3 : tournament.dataValues.tournament_ruleset == "2vs2" ? participants.data.length * 2 : participants.data.length
+      }
+
       first = /^[0-9]*$/.test(tournament.dataValues.tournament_first) ? `<@${tournament.dataValues.tournament_first}>` : tournament.dataValues.tournament_first
       second = /^[0-9]*$/.test(tournament.dataValues.tournament_second) ? `<@${tournament.dataValues.tournament_second}>` : tournament.dataValues.tournament_second
       third = /^[0-9]*$/.test(tournament.dataValues.tournament_third) ? `<@${tournament.dataValues.tournament_third}>` : tournament.dataValues.tournament_third 
 
       embed.addFields(
-        { name: ':small_orange_diamond: Participants', value: players.toString(), inline: true },
+        { name: ':small_orange_diamond: Participants', value: participantsNumber.toString(), inline: true },
         { name: '\u200B', value: '\u200B' },
         { name: ':trophy: Résultats', value: '\u200B' },
         { name: ':first_place: ', value: first, inline: true },

@@ -104,9 +104,12 @@ module.exports = {
     if (args.get("poster")) bot.Tournaments.update({ tournament_poster: args.get("poster").value }, { where: { tournament_id: id } })
     if (args.get("status")) bot.Tournaments.update({ tournament_status: args.get("status").value }, { where: { tournament_id: id } })
     if (args.get("challonge")){
-      let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
-      let challonge = await req.body.json()
-      bot.Tournaments.update({ tournament_challonge: challonge.tournament.id }, { where: { tournament_id: id } })
+
+      let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
+      let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + ".json?community_id=sunafterthereign", requestOptions)
+      let challonge = await request.json()
+
+      bot.Tournaments.update({ tournament_challonge: challonge.data.id }, { where: { tournament_id: id } })
     } 
 
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })

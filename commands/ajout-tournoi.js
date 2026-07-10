@@ -148,9 +148,9 @@ module.exports = {
 
           let requestOptions = { method: 'POST', headers: bot.myHeaders, body: raw, redirect: 'follow' } 
 
-          let res = await fetch("https://api.challonge.com/v2.1/tournaments.json?community_id=sunafterthereign", requestOptions)
-          let data = await res.json()
-          challonge = data.data.id
+          let request = await fetch("https://api.challonge.com/v2.1/tournaments.json?community_id=sunafterthereign", requestOptions)
+          let response = await request.json()
+          challonge = response.data.id
         }
 
         if (args.get("date_pub")){   
