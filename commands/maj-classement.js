@@ -46,8 +46,9 @@ module.exports = {
         let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament_id + ".json?community_id=" + args.get("organization").value, requestOptions)
         let challonge = await request.json()
 
-        await bot.Tournaments2.upsert({
+        await bot.Tournaments.upsert({
           tournament_id: tournament_id,
+          tournament_organization: args.get("organization").value,
           tournament_name: challonge.data.attributes.name,
           tournament_challonge: challonge.data.id,
         }, { where: { tournament_id: tournament_id } })
@@ -59,7 +60,7 @@ module.exports = {
     const auth = await module.getAuth()
     const sheetId = await module.getSheet()
     
-    let tournaments = await module.getTournaments(bot)
+    let tournaments = await module.getTournaments(bot, args.get("organization").value)
   
     for (tournament of tournaments) await module.fetchBladersData(bot, tournament)
 

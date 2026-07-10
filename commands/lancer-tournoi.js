@@ -26,9 +26,13 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
+    await bot.Tournaments.update({ tournament_status: "Tournoi en cours" }, { where: { tournament_id: args.get("tournament_id").value.split(" - ")[0] } })
+
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: args.get("tournament_id").value.split(" - ")[0] } })
 
-    await require(`../events/.fetchBladersData.js`).run(bot, tournament)
+    await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, true)     
+
+    await require(`../events/.fetchBladersData.js`).run(bot, "sunafterthereign", "SAtR", tournament)
     
     await checkMatches(bot, tournament.dataValues.tournament_challonge)
     bot.interval = setInterval(() => checkMatches(bot, tournament.dataValues.tournament_challonge), 1000 * 60 * 5)
@@ -54,8 +58,8 @@ async function checkMatches(bot, tournament_id) {
       let participation1 = await bot.Participations.findOne({ where: { participation_id: match.attributes.points_by_participant[0].participant_id } })
       let participation2 = await bot.Participations.findOne({ where: { participation_id: match.attributes.points_by_participant[1].participant_id } })  
 
-      let blader1 = await bot.Bladers.findOne({ where: { blader_username: participation1.dataValues.participation_username } })
-      let blader2 = await bot.Bladers.findOne({ where: { blader_username: participation2.dataValues.participation_username } })
+      let blader1 = await bot.Bladers.findOne({ where: { blader_username: participation1.dataValues.participation_username, blader_organization: "SAtR" } })
+      let blader2 = await bot.Bladers.findOne({ where: { blader_username: participation2.dataValues.participation_username, blader_organization: "SAtR" } })
 
       bot.twitch_client.say(bot.twitch_channel, `${blader1.dataValues.blader_displayname} ${(match.attributes.scores == "0 - 0") ? match.attributes.points_by_participant[0].participant_id == match.attributes.winner_id ? "0-DQ" : "DQ-0" : match.attributes.scores.split(' ').join('')} ${blader2.dataValues.blader_displayname}`).catch(err => console.log(err))
       bot.knownMatches.set(match.id, match)

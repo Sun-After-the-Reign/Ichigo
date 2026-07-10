@@ -51,44 +51,39 @@ module.exports = async bot => {
       allowNull: false,
       unique: true,
     },
-    tournament_desc: {
+    tournament_organization: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    tournament_desc: {
+      type: Sequelize.STRING,
     },
     tournament_date: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_ruleset: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_format: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_place: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_message: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_role: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_season: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_poster: {
       type: Sequelize.STRING,
     },
     tournament_status: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     tournament_challonge: {
       type: Sequelize.STRING,
@@ -103,14 +98,6 @@ module.exports = async bot => {
       type: Sequelize.STRING,
     },
     tournament_event: {
-      type: Sequelize.STRING,
-    },
-    tournament_participants: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      defaultValue: "auto",
-    },
-    tournament_published: {
       type: Sequelize.STRING,
     },
   })
@@ -159,11 +146,22 @@ module.exports = async bot => {
     },
   })
   bot.Bladers = bot.db.define("blader", {
-    blader_username: {
-      type: Sequelize.STRING,
+    blader_id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
       unique: true,
+    },
+    blader_username: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: "blader",
+    },
+    blader_organization: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: "blader",
     },
     blader_displayname: {
       type: Sequelize.STRING,
@@ -193,49 +191,11 @@ module.exports = async bot => {
     },
   })
 
-  bot.Tournaments2 = bot.db.define("tournament2", {
-    tournament_id: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      primaryKey: true,
-      unique: true,
-    },
-    tournament_name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    tournament_challonge: {
-      type: Sequelize.STRING,
-    },
-  })
-  bot.Bladers2 = bot.db.define("blader2", {
-    blader_username: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      primaryKey: true,
-      unique: true,
-    },
-    blader_displayname: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    blader_clan: {
-      type: Sequelize.STRING,
-    },
-    blader_avatarurl: {
-      type: Sequelize.STRING,
-    },
-  })
-
   await bot.Tournaments.sync()
   await bot.Places.sync()
   await bot.Bladers.sync()
   await bot.Participations.sync()
 
-  await bot.Tournaments2.sync()
-  await bot.Bladers2.sync()
-  
   console.log("Database Online.")
 
   await slashcommands_loader(bot)

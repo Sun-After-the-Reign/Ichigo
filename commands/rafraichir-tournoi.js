@@ -12,7 +12,7 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    let tournaments = await bot.Tournaments.findAll()
+    let tournaments = await bot.Tournaments.findAll({ where: { tournament_message: { [Sequelize.Op.isNot]: null } } })
 
     for (tournament of tournaments) await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, true)
 

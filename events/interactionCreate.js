@@ -16,7 +16,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "tournament_id") { choices = tournaments.map(tournament => `${tournament.dataValues.tournament_id} - ${tournament.dataValues.tournament_name}`) }
     if (focusedOption.name === "format") { choices = ["Double Élimination", "Simple Élimination", "Système Suisse", "Poules", "Training"] }
     if (focusedOption.name === "ruleset") { choices = ["3on3", "1on1", "Team Battle", "Training"] }
-    if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours"] }
+    if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Tournoi en cours", "Tournoi fini"] }
     if (focusedOption.name === "place") { choices = places.map(place => place.dataValues.place_id) }
     if (focusedOption.name === "regle") { choices = Object.keys(bot.regles) }
     if (focusedOption.name === "annonce") { choices = ["Rappel", "Guide", "Inscriptions", "Rappel2", "Guide2"] }

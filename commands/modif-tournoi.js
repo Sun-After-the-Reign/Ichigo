@@ -79,13 +79,6 @@ module.exports = {
       required: false,
       autocomplete: false,
     },
-    {
-      type: "string",
-      name: "participants",
-      description: "Number of participant in the tournament",
-      required: false,
-      autocomplete: false,
-    }
   ],
 
   async run(bot, message, args) {
@@ -95,7 +88,6 @@ module.exports = {
     let id = args.get("tournament_id").value.split(" - ")[0]
 
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
-    if (!tournament) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })
 
     if (args.get("title")){
       bot.Tournaments.update({ tournament_name: args.get("title").value }, { where: { tournament_id: id } })
@@ -116,7 +108,6 @@ module.exports = {
       let challonge = await req.body.json()
       bot.Tournaments.update({ tournament_challonge: challonge.tournament.id }, { where: { tournament_id: id } })
     } 
-    if (args.get("participants")) bot.Tournaments.update({ tournament_participants: args.get("participants").value }, { where: { tournament_id: id } })
 
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 

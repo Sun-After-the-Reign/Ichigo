@@ -163,6 +163,7 @@ module.exports = {
           let tournament = await bot.Tournaments.create({
             tournament_id: tournament_id,
             tournament_name: args.get("title").value,
+            tournament_organization: args.get("title").value.includes("Marseille") ? "HV13" : "SAtR",
             tournament_desc: args.get("description").value.replaceAll("\\n", "\n"),
             tournament_date: Math.floor(date) / 1000,
             tournament_ruleset: args.get("ruleset").value,
