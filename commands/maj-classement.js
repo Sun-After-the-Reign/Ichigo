@@ -40,18 +40,16 @@ module.exports = {
     if (args.get("add_tournament")){
 
       for (let tournament of args.get("add_tournament").value.split(",")) {
-        let tournament_id = tournament
-
         let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament_id + ".json?community_id=" + args.get("organization").value, requestOptions)
+        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament + ".json?community_id=" + args.get("organization").value, requestOptions)
         let challonge = await request.json()
 
         await bot.Tournaments.upsert({
-          tournament_id: tournament_id,
+          tournament_id: tournament,
           tournament_organization: args.get("organization").value,
           tournament_name: challonge.data.attributes.name,
           tournament_challonge: challonge.data.id,
-        }, { where: { tournament_id: tournament_id } })
+        }, { where: { tournament_id: tournament } })
       }
     }
 

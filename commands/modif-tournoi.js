@@ -106,7 +106,7 @@ module.exports = {
     if (args.get("challonge")){
 
       let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-      let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + ".json?community_id=sunafterthereign", requestOptions)
+      let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + args.get("challonge").value + ".json?community_id=sunafterthereign", requestOptions)
       let challonge = await request.json()
 
       bot.Tournaments.update({ tournament_challonge: challonge.data.id }, { where: { tournament_id: id } })

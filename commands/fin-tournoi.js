@@ -73,7 +73,6 @@ module.exports = {
     let third = args.get("third").value
   
     bot.Tournaments.update({ tournament_first: first, tournament_second: second, tournament_third: third, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
-    if (tournament.dataValues.tournament_challonge) bot.Tournaments.update({ tournament_participants: "challonge" }, { where: { tournament_id: id } })
     if (args.get("delete_role")) message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
   
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
@@ -86,7 +85,7 @@ module.exports = {
     content += "\n"
     content += "Bravo à tous·tes !"
 
-    let image = await computeImage(bot, tournament_updated)
+    let image = await computeImage(bot, tournament_updated, args.get("qr").value)
 
     let channel = await message.guild.channels.fetch(args.get("post_result").value)
     await channel.send({ content: content, files: [new Discord.AttachmentBuilder(await image.encode('png'), { name: 'top8.png' })] })
@@ -95,7 +94,7 @@ module.exports = {
   }
 }
 
-async function computeImage(bot, tournament) {
+async function computeImage(bot, tournament, qr) {
   Canvas.GlobalFonts.registerFromPath('./medias/top8/franklin.ttf', 'Franklin')
   Canvas.GlobalFonts.registerFromPath('./medias/top8/impact.ttf', 'Impact')
 
@@ -123,21 +122,25 @@ async function computeImage(bot, tournament) {
   let date = new Date(Math.floor(tournament.dataValues.tournament_date) * 1000)
   let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
 
-  context.fillText(tournament.dataValues.tournament_name + " - Sun After the Reign saison " + tournament.dataValues.tournament_season, 35, 1040)
+  context.fillText(tournament.dataValues.tournament_name + " - Sun After the Reign / Saison " + tournament.dataValues.tournament_season, 35, 1040)
   context.fillText(tournament.dataValues.tournament_ruleset + " - " + tournament.dataValues.tournament_format, 35, 1060)
   context.fillText(String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear() + ' - ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + " à " + place.dataValues.place_name + ", " + place.dataValues.place_city, 35, 1080)
 
-  context.drawImage(await Canvas.loadImage(args.get("qr").value), 956, 33, 120, 120)
+  context.drawImage(await Canvas.loadImage(qr), 956, 33, 120, 120)
 
   context.fillStyle = '#ffffff'
 
   let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-  let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/matches.json?community_id=sunafterthereign&per_page=200", requestOptions)
-  let response = await request.json()
+  let request1 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/matches.json?community_id=sunafterthereign&per_page=200", requestOptions)
+  let request2 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
 
-  let matches = response.data
-  let participants = response.included.filter(p => p.type === "participant" && p.attributes.final_rank <= 8 && p.attributes.final_rank != null).sort((a, b) => a.attributes.final_rank != b.attributes.final_rank ? a.attributes.final_rank - b.attributes.final_rank : a.attributes.name - b.attributes.name)
+  let response1 = await request1.json()
+  let response2 = await request2.json()
 
+  let matches = response1.data
+  let participants = response2.data.filter(p => p.attributes.final_rank <= 8 && p.attributes.final_rank != null).sort((a, b) => a.attributes.final_rank != b.attributes.final_rank ? a.attributes.final_rank - b.attributes.final_rank : a.attributes.name - b.attributes.name)
+
+  console.log(matches)
 
   for (let player of participants) {
 
@@ -149,16 +152,16 @@ async function computeImage(bot, tournament) {
 
     let playerMatches = matches.filter(m => m.attributes.scores != "0 - 0" && (m.attributes.points_by_participant[0].participant_id == player.id || m.attributes.points_by_participant[1].participant_id == player.id))
 
-    let winrate = playerMatches.data.filter(m => m.attributes.winner_id == player.id).length / playerMatches.data.length
-    let historics = playerMatches.data.map(m => m.attributes.winner_id == player.id ? "W" : "L")
-    let points = playerMatches.data.map(m => m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0] > 4 ? 4 : m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0]).reduce((a, b) => a + b, 0)
+    let winrate = playerMatches.filter(m => m.attributes.winner_id == player.id).length / playerMatches.length
+    let historics = playerMatches.map(m => m.attributes.winner_id == player.id ? "W" : "L")
+    let points = playerMatches.map(m => m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0] > 4 ? 4 : m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0]).reduce((a, b) => a + b, 0)
 
     context.font = '36px Impact'
     context.fillText(blader ? blader.dataValues.blader_displayname.slice(0, 24) : player.attributes.name.slice(0, 24), base_info[0], base_info[1] + y_decal + base_info_modif[0])
 
     context.font = '16px Franklin'
     context.fillText((winrate * 100).toFixed(2) + "% WR", base_info[0], base_info[1] + y_decal + base_info_modif[1])
-    context.fillText((points / playerMatches.data.length).toFixed(2) + " pts/match", base_info[0], base_info[1] + y_decal + base_info_modif[2])
+    context.fillText((points / playerMatches.length).toFixed(2) + " pts/match", base_info[0], base_info[1] + y_decal + base_info_modif[2])
 
     let hist = 1
 

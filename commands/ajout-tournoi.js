@@ -175,7 +175,6 @@ module.exports = {
             tournament_status: "Inscriptions en cours",
             tournament_challonge: challonge,
             tournament_season: bot.season,
-            tournament_published: "false",
           })
 
           let event = await message.guild.scheduledEvents.create({
@@ -216,38 +215,33 @@ async function publishTournament(bot, id, post) {
 
   let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
-  if (tournament.dataValues.tournament_published == "false") {
+  let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
+  let medias = []
+  let msg = ""
 
-    let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
-    let medias = []
-    let msg = ""
+  if (tournament.dataValues.tournament_poster) medias.push({ attachment: tournament.dataValues.tournament_poster })
 
-    if (tournament.dataValues.tournament_poster) medias.push({ attachment: tournament.dataValues.tournament_poster })
+  msg = "-# @everyone - Annonce Tournoi <:SAtR:1342678543670317119>" + "\n"
 
-    msg = "-# @everyone - Annonce Tournoi <:SAtR:1342678543670317119>" + "\n"
+  msg += "## :trophy: " + tournament.dataValues.tournament_name.toUpperCase() + " :trophy:\n"
 
-    msg += "## :trophy: " + tournament.dataValues.tournament_name.toUpperCase() + " :trophy:\n"
+  msg += "**" + tournament.dataValues.tournament_desc.toUpperCase() + "**" + "\n"
 
-    msg += "**" + tournament.dataValues.tournament_desc.toUpperCase() + "**" + "\n"
+  msg += "\n"
 
-    msg += "\n"
+  msg += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n"
 
-    msg += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n"
+  msg += "\n"
 
-    msg += "\n"
+  msg += `:date: Date : Le <t:${tournament.dataValues.tournament_date}:D>, à partir de <t:${tournament.dataValues.tournament_date}:t> (<t:${tournament.dataValues.tournament_date}:R>)` + "\n"
+  msg += `:map: Lieu : ${place.dataValues.place_name}, ${place.dataValues.place_city}` + "\n"
+  msg += `:bar_chart: Format : ${tournament.dataValues.tournament_format}` + "\n"
+  msg += `:scroll: Règlement : ${tournament.dataValues.tournament_ruleset}` + "\n"
+  msg += `:globe_with_meridians: Lien : https://challonge.com/${tournament.dataValues.tournament_id}` + "\n"
 
-    msg += `:date: Date : Le <t:${tournament.dataValues.tournament_date}:D>, à partir de <t:${tournament.dataValues.tournament_date}:t> (<t:${tournament.dataValues.tournament_date}:R>)` + "\n"
-    msg += `:map: Lieu : ${place.dataValues.place_name}, ${place.dataValues.place_city}` + "\n"
-    msg += `:bar_chart: Format : ${tournament.dataValues.tournament_format}` + "\n"
-    msg += `:scroll: Règlement : ${tournament.dataValues.tournament_ruleset}` + "\n"
-    msg += `:globe_with_meridians: Lien : https://challonge.com/${tournament.dataValues.tournament_id}` + "\n"
+  msg += "\n"
 
-    msg += "\n"
+  msg += `-# Merci d'indiquer votre participation sur le [Challonge](https://challonge.com/${tournament.dataValues.tournament_id}) afin que nous puissions estimer au mieux la taille du tournoi.`
 
-    msg += `-# Merci d'indiquer votre participation sur le [Challonge](https://challonge.com/${tournament.dataValues.tournament_id}) afin que nous puissions estimer au mieux la taille du tournoi.`
-
-    await channel.send({ content: msg, files: medias })
-    return await bot.Tournaments.update({ tournament_published: "true" }, { where: { tournament_id: tournament.dataValues.tournament_id } })
-  }
-  return
+  return await channel.send({ content: msg, files: medias })
 }

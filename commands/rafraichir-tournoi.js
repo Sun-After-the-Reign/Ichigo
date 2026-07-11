@@ -1,4 +1,5 @@
 const Discord = require("discord.js")
+const Sequelize = require("sequelize")
 
 module.exports = {
 
@@ -12,7 +13,7 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    let tournaments = await bot.Tournaments.findAll({ where: { tournament_message: { [Sequelize.Op.isNot]: null } } })
+    let tournaments = await bot.Tournaments.findAll({ where: { tournament_message: { [Sequelize.Op.gt]: 0 } } })
 
     for (tournament of tournaments) await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, true)
 
