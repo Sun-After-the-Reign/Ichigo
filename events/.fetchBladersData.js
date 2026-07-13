@@ -15,7 +15,7 @@ module.exports = {
       let user = users.find(u => u.attributes.username === participant.attributes.username)
 
       let clan = participant.attributes.name.includes(" | ") ? participant.attributes.name.split(" | ")[0] : ""
-      let displayname = participant.attributes.name.includes(" | ") ? participant.attributes.name.split(" | ")[1].replace("✅", "") : participant.attributes.name.replace("✅", "")
+      let displayname = participant.attributes.name.includes(" | ") ? participant.attributes.name.split(" | ")[1].replace(/[^\x00-\x7F]/g, "") : participant.attributes.name.replace(/[^\x00-\x7F]/g, "")
       let username = user ? user.attributes.username : displayname
      
       await bot.Bladers.upsert({
