@@ -140,13 +140,11 @@ async function computeImage(bot, tournament, qr) {
   let matches = response1.data
   let participants = response2.data.filter(p => p.attributes.final_rank <= 8 && p.attributes.final_rank != null).sort((a, b) => a.attributes.final_rank != b.attributes.final_rank ? a.attributes.final_rank - b.attributes.final_rank : a.attributes.name - b.attributes.name)
 
-  console.log(matches)
-
   for (let player of participants) {
 
     let y_decal = (y_decal_base * (rank - 1))
 
-    let blader = await bot.Bladers.findOne({ where: { blader_username: player.attributes.username, blader_organization: "SAtR" } })
+    let blader = await bot.Bladers.findOne({ where: { blader_username: player.attributes.username, blader_organization: tournament_organization } })
     try { context.drawImage(await Canvas.loadImage(blader?.dataValues.blader_avatarurl), base_icon[0], base_icon[1] + y_decal, 82, 82) } catch (err) { context.drawImage(await Canvas.loadImage("https://user-assets.challonge.com/misc/challonge_fireball_gray.png"), base_icon[0], base_icon[1] + y_decal, 82, 82) }
     if (blader?.dataValues.blader_clan) context.drawImage(await Canvas.loadImage(`./medias/clans/${blader?.dataValues.blader_clan}.png`), base_clan[0], base_clan[1] + y_decal, 82, 82)
 
