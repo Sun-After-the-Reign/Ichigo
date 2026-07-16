@@ -3,8 +3,8 @@ const Canvas = require('@napi-rs/canvas')
 
 module.exports = {
 
-  name: "calendrier",
-  description: "Génère le calendrier des évènements",
+  name: "splotlight",
+  description: "Génère les Beys pour un spotlight",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
   category: "Utilitaire",
