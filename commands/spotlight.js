@@ -45,13 +45,13 @@ module.exports = {
 
     let taille_img = 190
 
-    let x1 = 540
-    let x2 = 740
-    let x3 = 950
+    let x1 = 500
+    let x2 = 700
+    let x3 = 880
 
     let y1 = 360
-    let y2 = 580
-    let y3 = 820
+    let y2 = 560
+    let y3 = 760
 
     let lien_blade = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Blade/"
     let lien_ratchet = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Ratchet/"
