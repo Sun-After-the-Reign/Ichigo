@@ -54,19 +54,19 @@ module.exports = {
     let y3 = 820
 
     console.log("toupie1")
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey1[0].replace(' ','')}.png`), x1, y1, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey1[1]}.png`), x2, y1, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey1[2].replace(' ','%20')}.png`), x3, y1, taille_img, taille_img)
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey1[0].replace(' ','')}.png`), x1, y1, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey1[1]}.png`), x2, y1, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey1[2].replace(' ','%20')}.png`), x3, y1, taille_img, taille_img) } catch(err) {}
 
     console.log("toupie2")
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey2[0].replace(' ','')}.png`), x1, y2, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey2[1]}.png`), x2, y2, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey2[2].replace(' ','%20')}.png`), x3, y2, taille_img, taille_img)
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey2[0].replace(' ','')}.png`), x1, y2, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey2[1]}.png`), x2, y2, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey2[2].replace(' ','%20')}.png`), x3, y2, taille_img, taille_img) } catch(err) {}
 
     console.log("toupie3")
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey3[0].replace(' ','')}.png`), x1, y3, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey3[1]}.png`), x2, y3, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey3[2].replace(' ','%20')}.png`), x3, y3, taille_img, taille_img)
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey3[0].replace(' ','')}.png`), x1, y3, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey3[1]}.png`), x2, y3, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey3[2].replace(' ','%20')}.png`), x3, y3, taille_img, taille_img) } catch(err) {}
 
     return await message.editReply({ content: "C'est bon", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'spotlight.png' })]})
     
