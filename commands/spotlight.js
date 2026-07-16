@@ -19,14 +19,14 @@ module.exports = {
     {
       type: "string",
       name: "bey2",
-      description: "First Bey",
+      description: "Second Bey",
       required: true,
       autocomplete: false,
     },
     {
       type: "string",
       name: "bey3",
-      description: "First Bey",
+      description: "Third Bey",
       required: true,
       autocomplete: false,
     },
