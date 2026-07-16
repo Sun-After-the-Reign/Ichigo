@@ -3,7 +3,7 @@ const Canvas = require('@napi-rs/canvas')
 
 module.exports = {
 
-  name: "splotlight",
+  name: "spotlight",
   description: "Génère les Beys pour un spotlight",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
@@ -53,17 +53,17 @@ module.exports = {
     let y2 = 580
     let y3 = 820
 
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey1[0]}.png`), x1, y1, taille_img, taille_img)
+    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey1[0].replace(' ','')}.png`), x1, y1, taille_img, taille_img)
     context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey1[1]}.png`), x2, y1, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey1[2]}.png`), x3, y1, taille_img, taille_img)
+    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey1[2].replace(' ','%20')}.png`), x3, y1, taille_img, taille_img)
 
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey2[0]}.png`), x1, y2, taille_img, taille_img)
+    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey2[0].replace(' ','')}.png`), x1, y2, taille_img, taille_img)
     context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey2[1]}.png`), x2, y2, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey2[2]}.png`), x3, y2, taille_img, taille_img)
+    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey2[2].replace(' ','%20')}.png`), x3, y2, taille_img, taille_img)
 
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey3[0]}.png`), x1, y3, taille_img, taille_img)
+    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Blade/${bey3[0].replace(' ','')}.png`), x1, y3, taille_img, taille_img)
     context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Ratchet/${bey3[1]}.png`), x2, y3, taille_img, taille_img)
-    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey3[2]}.png`), x3, y3, taille_img, taille_img)
+    context.drawImage(await Canvas.loadImage(`https://github.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/blob/master/Bit/${bey3[2].replace(' ','%20')}.png`), x3, y3, taille_img, taille_img)
 
     return await message.editReply({ content: "C'est bon", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'spotlight.png' })]})
     
