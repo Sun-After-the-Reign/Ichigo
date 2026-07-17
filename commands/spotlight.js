@@ -66,8 +66,8 @@ module.exports = {
     let x2 = 830 - (taille_reste/2)
     let x3 = 991 - (taille_reste/2)
 
-    let y1 = 423 - (taille_blade/2)
-    let y12 = 423 - (taille_reste/2)
+    let y1 = 441 - (taille_blade/2)
+    let y12 = 441 - (taille_reste/2)
     let y2 = 675 - (taille_blade/2)
     let y22 = 675 - (taille_reste/2)
     let y3 = 906 - (taille_blade/2)
