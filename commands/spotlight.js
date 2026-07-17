@@ -18,6 +18,13 @@ module.exports = {
     },
     {
       type: "string",
+      name: "top",
+      description: "Trophy to display",
+      required: true,
+      autocomplete: true,
+    },
+    {
+      type: "string",
       name: "bey1",
       description: "First Bey",
       required: true,
@@ -73,8 +80,9 @@ module.exports = {
     let lien_ratchet = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Ratchet/"
     let lien_bit = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Bit/"
 
+    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/fond.png`), 0, 0, taille_img, taille_img) } catch(err) {}
     try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("organization")}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
-
+    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("top")}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
 
     if (bey1[0] != "CX") try { context.drawImage(await Canvas.loadImage(lien_blade + bey1[0].replace(' ','') + ".png"), x1, y1, taille_blade, taille_blade) } catch(err) {}
     if (uxe.includes(bey1[0])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[2].replace(' ','%20') + ".png"), x2, y12, taille_reste, taille_reste) } catch(err) {}
