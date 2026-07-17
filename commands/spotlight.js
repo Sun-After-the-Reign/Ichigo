@@ -21,7 +21,7 @@ module.exports = {
       name: "top",
       description: "Trophy to display",
       required: true,
-      autocomplete: true,
+      autocomplete: false,
     },
     {
       type: "string",
