@@ -73,7 +73,7 @@ module.exports = {
     let y3 = 906 - (taille_blade/2)
     let y32 = 906 - (taille_reste/2)
 
-    let rib = ["Operate", "Turbo"]
+    let rib = ["OPerate", "TuRbo"]
     let uxe = ["Aegis Rampart", "Bison Burrow", "Bullet Griffon", "Glory Valkyrie", "Hells Nether", "Shinobi Shuriken"]
 
     let lien_blade = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Blade/"
