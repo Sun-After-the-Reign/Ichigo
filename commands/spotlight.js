@@ -81,28 +81,25 @@ module.exports = {
     let lien_bit = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Bit/"
 
     try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/fond.png`), 0, 0, taille_img, taille_img) } catch(err) {}
-    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("organization")}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
-    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("top")}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("organization").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
+    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("top").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
 
     if (bey1[0] != "CX") try { context.drawImage(await Canvas.loadImage(lien_blade + bey1[0].replace(' ','') + ".png"), x1, y1, taille_blade, taille_blade) } catch(err) {}
-    if (uxe.includes(bey1[0])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[2].replace(' ','%20') + ".png"), x2, y12, taille_reste, taille_reste) } catch(err) {}
-    else if (rib.includes(bey1[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[1] + ".png"), x2, y12, taille_reste, taille_reste) } catch(err) {}
+    if (uxe.includes(bey1[0]) || rib.includes(bey1[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[1].replace(' ','%20') + ".png"), x2, y12, taille_reste, taille_reste) } catch(err) {}
     else {
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[1] + ".png"), x2, y12, taille_reste, taille_reste) } catch(err) {}
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[2].replace(' ','%20') + ".png"), x3, y12, taille_reste, taille_reste) } catch(err) {}
     }
 
     if (bey2[0] != "CX") try { context.drawImage(await Canvas.loadImage(lien_blade + bey2[0].replace(' ','') + ".png"), x1, y2, taille_blade, taille_blade) } catch(err) {}
-    if (uxe.includes(bey2[0])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[2].replace(' ','%20') + ".png"), x2, y22, taille_reste, taille_reste) } catch(err) {}
-    else if (rib.includes(bey2[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[1] + ".png"), x2, y22, taille_reste, taille_reste) } catch(err) {}
+    if (uxe.includes(bey2[0]) || rib.includes(bey2[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[1].replace(' ','%20') + ".png"), x2, y22, taille_reste, taille_reste) } catch(err) {}
     else {
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[1] + ".png"), x2, y22, taille_reste, taille_reste) } catch(err) {}
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[2].replace(' ','%20') + ".png"), x3, y22, taille_reste, taille_reste) } catch(err) {}
     }
 
     if (bey3[0] != "CX") try { context.drawImage(await Canvas.loadImage(lien_blade + bey3[0].replace(' ','') + ".png"), x1, y3, taille_blade, taille_blade) } catch(err) {}
-    if (uxe.includes(bey3[0])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey3[2].replace(' ','%20') + ".png"), x2, y32, taille_reste, taille_reste) } catch(err) {}
-    else if (rib.includes(bey3[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey3[1] + ".png"), x2, y32, taille_reste, taille_reste) } catch(err) {}
+    if (uxe.includes(bey3[0]) || rib.includes(bey3[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey3[1].replace(' ','%20') + ".png"), x2, y32, taille_reste, taille_reste) } catch(err) {}
     else {
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey3[1] + ".png"), x2, y32, taille_reste, taille_reste) } catch(err) {}
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey3[2].replace(' ','%20') + ".png"), x3, y32, taille_reste, taille_reste) } catch(err) {}
