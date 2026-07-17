@@ -84,7 +84,7 @@ module.exports = {
       context.drawImage(await Canvas.loadImage('./medias/calendrier/QR/' + event_data[4].split("Organisé par ")[1] + '.png'), taille_img_x - marge_x - taille_qr_xy, (pos_text_y + marge_eventdata_y * 4) - taille_qr_xy, taille_qr_xy, taille_qr_xy)
 
     }
-    return await message.editReply({ content: "C'est bon", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'calendrier.png' })]})
+    return await message.editReply({ content: "C'est bon.", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'calendrier.png' })]})
     
   }
 }
