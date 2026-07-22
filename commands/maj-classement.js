@@ -19,6 +19,13 @@ module.exports = {
     },
     {
       type: "string",
+      name: "community",
+      description: "Community to search infos",
+      required: false,
+      autocomplete: true,
+    },
+    {
+      type: "string",
       name: "send_message",
       description: "Option to send ranking messages",
       required: false,
@@ -41,7 +48,7 @@ module.exports = {
 
       for (let tournament of args.get("add_tournament").value.split(",")) {
         let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament + ".json?community_id=" + args.get("organization").value, requestOptions)
+        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament + ".json?community_id=" + args.get("community").value, requestOptions)
         let challonge = await request.json()
 
         await bot.Tournaments.upsert({
