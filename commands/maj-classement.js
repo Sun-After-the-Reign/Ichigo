@@ -72,7 +72,7 @@ module.exports = {
     let performanceData = await module.fetchPerformanceData(bot, tournaments)
 
     let classement = await module.computeRanking(bot, performanceData, tournaments.length)    
-    if (args.get("send_message")) await module.publishTop(bot, classement, message, tournaments)
+    if (args.get("send_message")) await module.publishTop(bot, classement, message, tournaments, args.get("send_message").value)
 
     await cleanRanking(bot, auth, sheetId, module.baseSize, `${module.sheet}!B2`)
     await cleanRanking(bot, auth, sheetId, module.rawSize, `RAW ${module.sheet}!A2`)
