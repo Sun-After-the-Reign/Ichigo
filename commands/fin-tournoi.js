@@ -74,9 +74,10 @@ module.exports = {
   
     bot.Tournaments.update({ tournament_first: first, tournament_second: second, tournament_third: third, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
     if (args.get("delete_role")) message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
-  
+        
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
     await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
+    await require(`../events/.fetchBladersData.js`).run(bot, "sunafterthereign", tournament_updated)
 
     let content = `## ${tournament_updated.dataValues.tournament_name} (<t:${tournament_updated.dataValues.tournament_date}:d>) - **${tournament_updated.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament_updated.dataValues.tournament_id})` + "\n"
     content += `- :trophy: **1ʳᵉ place** - ${first.match(/^[0-9]{18}/) ? "<@" + first + ">" : first}` + "\n"

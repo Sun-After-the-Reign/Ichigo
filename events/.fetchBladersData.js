@@ -2,7 +2,7 @@ const { request } = require('undici')
 
 module.exports = {
 
-  async run(bot, community, organization, tournament) {
+  async run(bot, community, tournament) {
 
     let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
     let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=" + community + "&per_page=200", requestOptions)
@@ -20,11 +20,11 @@ module.exports = {
      
       await bot.Bladers.upsert({
         blader_username: username,
-        blader_organization: organization,
+        blader_organization: tournament.dataValues.tournament_organization,
         blader_displayname: displayname,
         blader_clan: clan,
         blader_avatarurl: user?.attributes.image_url,
-      }, { where: { blader_username: username, blader_organization: organization } }, conflictFields = ['blader_username', 'blader_organization'])
+      }, { where: { blader_username: username, blader_organization: tournament.dataValues.tournament_organization } }, conflictFields = ['blader_username', 'blader_organization'])
 
       await bot.Participations.upsert({
         participation_id: participant.id,

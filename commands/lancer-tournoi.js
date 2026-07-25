@@ -32,7 +32,7 @@ module.exports = {
 
     await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, true)     
 
-    await require(`../events/.fetchBladersData.js`).run(bot, "sunafterthereign", "SAtR", tournament)
+    await require(`../events/.fetchBladersData.js`).run(bot, "sunafterthereign", tournament)
     
     await checkMatches(bot, tournament.dataValues.tournament_challonge)
     bot.interval = setInterval(() => checkMatches(bot, tournament.dataValues.tournament_challonge), 1000 * 60 * 5)
