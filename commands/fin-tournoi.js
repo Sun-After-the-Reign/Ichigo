@@ -147,7 +147,7 @@ async function computeImage(bot, tournament, qr) {
 
     let blader = await bot.Bladers.findOne({ where: { blader_username: player.attributes.username, blader_organization: tournament.dataValues.tournament_organization } })
     try { context.drawImage(await Canvas.loadImage(blader?.dataValues.blader_avatarurl), base_icon[0], base_icon[1] + y_decal, 82, 82) } catch (err) { context.drawImage(await Canvas.loadImage("https://user-assets.challonge.com/misc/challonge_fireball_gray.png"), base_icon[0], base_icon[1] + y_decal, 82, 82) }
-    if (blader?.dataValues.blader_clan) context.drawImage(await Canvas.loadImage(`./medias/clans/${blader?.dataValues.blader_clan}.png`), base_clan[0], base_clan[1] + y_decal, 82, 82)
+    try { if (blader?.dataValues.blader_clan) context.drawImage(await Canvas.loadImage(`./medias/clans/${blader?.dataValues.blader_clan}.png`), base_clan[0], base_clan[1] + y_decal, 82, 82) } catch (err) {}
 
     let playerMatches = matches.filter(m => m.attributes.scores != "0 - 0" && (m.attributes.points_by_participant[0].participant_id == player.id || m.attributes.points_by_participant[1].participant_id == player.id))
 
