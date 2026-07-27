@@ -156,7 +156,7 @@ async function computeImage(bot, tournament, qr) {
     let points = playerMatches.map(m => m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0] > 4 ? 4 : m.attributes.points_by_participant.find(p => p.participant_id == player.id).scores[0]).reduce((a, b) => a + b, 0)
 
     context.font = '36px Impact'
-    context.fillText(blader ? blader.dataValues.blader_displayname.slice(0, 24) : player.attributes.name.slice(0, 24), base_info[0], base_info[1] + y_decal + base_info_modif[0])
+    context.fillText(blader ? blader.dataValues.blader_displayname.replaceAll(/[\p{Emoji_Modifier_Base}\p{Emoji_Component}\p{Emoji_Presentation}\p{Emoji}]/gu, '').slice(0, 24) : player.attributes.name.replaceAll(/[\p{Emoji_Modifier_Base}\p{Emoji_Component}\p{Emoji_Presentation}\p{Emoji}]/gu, '').slice(0, 24), base_info[0], base_info[1] + y_decal + base_info_modif[0])
 
     context.font = '16px Franklin'
     context.fillText((winrate * 100).toFixed(2) + "% WR", base_info[0], base_info[1] + y_decal + base_info_modif[1])

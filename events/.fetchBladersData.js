@@ -15,7 +15,7 @@ module.exports = {
       let user = users.find(u => u.attributes.username === participant.attributes.username)
 
       let clan = participant.attributes.name.includes(" | ") ? participant.attributes.name.split(" | ")[0] : ""
-      let displayname = participant.attributes.name.includes(" | ") ? participant.attributes.name.split(" | ")[1].replace("✅", "").replace(" ✅", "") : participant.attributes.name.replace("✅", "").replace(" ✅", "")
+      let displayname = participant.attributes.name.includes(" | ") ? participant.attributes.name.replaceAll(/[\p{Emoji_Modifier_Base}\p{Emoji_Component}\p{Emoji_Presentation}\p{Emoji}]/gu, '').split(" | ")[1] : participant.attributes.name.replaceAll(/[\p{Emoji_Modifier_Base}\p{Emoji_Component}\p{Emoji_Presentation}\p{Emoji}]/gu, '')
       let username = user ? user.attributes.username : displayname
      
       await bot.Bladers.upsert({
