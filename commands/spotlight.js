@@ -107,7 +107,7 @@ module.exports = {
     try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("organization").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
     try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("top").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
 
-    blade = args.get(custom1) ? args.get(custom1).value : lien_blade + bey1[0].replace(' ', '') + ".png"
+    blade = args.get("custom1") ? args.get("custom1").value : lien_blade + bey1[0].replace(' ', '') + ".png"
     try { context.drawImage(await Canvas.loadImage(blade), x1, y1, taille_blade, taille_blade) } catch(err) {}
     if (uxe.includes(bey1[0]) || rib.includes(bey1[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[1].replace(' ','%20') + ".png"), x2, y12, taille_reste, taille_reste) } catch(err) {}
     else {
@@ -115,7 +115,7 @@ module.exports = {
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey1[2].replace(' ','%20') + ".png"), x3, y12, taille_reste, taille_reste) } catch(err) {}
     }
 
-    blade = args.get(custom2) ? args.get(custom2).value : lien_blade + bey2[0].replace(' ', '') + ".png"
+    blade = args.get("custom2") ? args.get("custom2").value : lien_blade + bey2[0].replace(' ', '') + ".png"
     try { context.drawImage(await Canvas.loadImage(blade), x1, y2, taille_blade, taille_blade) } catch(err) {}
     if (uxe.includes(bey2[0]) || rib.includes(bey2[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[1].replace(' ','%20') + ".png"), x2, y22, taille_reste, taille_reste) } catch(err) {}
     else {
@@ -123,7 +123,7 @@ module.exports = {
       try { context.drawImage(await Canvas.loadImage(lien_bit + bey2[2].replace(' ','%20') + ".png"), x3, y22, taille_reste, taille_reste) } catch(err) {}
     }
 
-    blade = args.get(custom3) ? args.get(custom3).value : lien_blade + bey3[0].replace(' ', '') + ".png"
+    blade = args.get("custom3") ? args.get("custom3").value : lien_blade + bey3[0].replace(' ', '') + ".png"
     try { context.drawImage(await Canvas.loadImage(blade), x1, y3, taille_blade, taille_blade) } catch(err) {}
     if (uxe.includes(bey3[0]) || rib.includes(bey3[1])) try { context.drawImage(await Canvas.loadImage(lien_bit + bey3[1].replace(' ','%20') + ".png"), x2, y32, taille_reste, taille_reste) } catch(err) {}
     else {
