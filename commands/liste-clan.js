@@ -21,9 +21,9 @@ module.exports = {
 
     await message.deferReply()
 
-    let msg = ""
-
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: args.get("tournament_id").value.split(" - ")[0] } })
+
+    let msg = `## Clans inscrits pour le ${tournament.dataValues.tournament_name}.\n`
 
     let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
     let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
