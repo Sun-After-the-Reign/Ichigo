@@ -33,7 +33,7 @@ module.exports = {
 
     let clans = Array.from(new Set(participants.map(p => p.attributes.name.split(" | ")[0]))).sort()
 
-    for (clan of clans) msg += clan + " (" + response.data.filter(p => p.attributes.name.includes(clan)).length + ")\n"
+    for (clan of clans) msg += clan + " (" + response.data.filter(p => p.attributes.name.includes(clan)).length + " -> " + response.data.filter(p => p.attributes.name.includes(clan)).map(p => p.attributes.name.split(" | ")[1]).join(',') + ")\n"
 
     return await message.editReply(msg)
 
