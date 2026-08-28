@@ -31,7 +31,7 @@ module.exports = {
 
     let base_icon = [96, 221]
     let base_info = [230, 258]
-    let base_info_modif = [0, 30, 38, 74]
+    let base_info_modif = [0, 25, 38, 74]
     let x_decal_base = 540
     let y_decal_base = 154
 
@@ -73,7 +73,7 @@ module.exports = {
       context.fillText(name.toUpperCase(), base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[0])
 
       context.font = '24px Franklin'
-      context.fillText(players + " membres enregistrés", base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[1])
+      context.fillText(players + " membres", base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[1])
     
       context.font = '26px Franklin'
       context.fillText("SCORE " + score, base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[3])
