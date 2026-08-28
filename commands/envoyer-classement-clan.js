@@ -62,6 +62,7 @@ module.exports = {
       let tag = data_clan.split(';')[0]
       let name = data_clan.split(';')[1]
       let score = data_clan.split(';')[2]
+      let players = data_clan.split(';')[3]
 
       let x_decal = (x_decal_base * (Math.ceil(rank / 5) - 1))
       let y_decal = (y_decal_base * ((rank - 1) % 5))
@@ -70,6 +71,9 @@ module.exports = {
     
       context.font = '32px Impact'
       context.fillText(name.toUpperCase(), base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[0])
+
+      context.font = '16px Franklin'
+      context.fillText(players + " membres", base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[1])
     
       context.font = '26px Franklin'
       context.fillText("SCORE " + score, base_info[0] + x_decal, base_info[1] + y_decal + base_info_modif[3])
