@@ -95,7 +95,7 @@ module.exports = {
     let y32 = 906 - (taille_reste/2)
 
     let rib = ["OPerate", "TuRbo"]
-    let uxe = ["Aegis Rampart", "Bison Burrow", "Bullet Griffon", "Glory Valkyrie", "Hells Nether", "Shinobi Shuriken"]
+    let uxe = ["AegisRampart", "BisonBurrow", "BulletGriffon", "GloryValkyrie", "HellsNether", "ShinobiShuriken"]
 
     let lien_blade = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Blade/"
     let lien_ratchet = "https://raw.githubusercontent.com/Sun-After-the-Reign/Beyblade-X-Parts-Image-Database/refs/heads/master/Ratchet/"
