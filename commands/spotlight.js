@@ -61,7 +61,14 @@ module.exports = {
     {
       type: "string",
       name: "custom3",
-      description: "Third Second",
+      description: "Third Custom",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
+      name: "custombackground",
+      description: "Custom Background",
       required: false,
       autocomplete: false,
     },
@@ -103,7 +110,8 @@ module.exports = {
 
     let blade = ""
 
-    try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/fond.png`), 0, 0, taille_img, taille_img) } catch(err) {}
+    args.get("custombackground") ? try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("custombackground").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {} : try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/fond.png`), 0, 0, taille_img, taille_img) } catch(err) {}
+    
     try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("organization").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
     try { context.drawImage(await Canvas.loadImage(`./medias/spotlight/${args.get("top").value}.png`), 0, 0, taille_img, taille_img) } catch(err) {}
 
