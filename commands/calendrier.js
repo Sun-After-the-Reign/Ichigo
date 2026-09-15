@@ -32,7 +32,7 @@ module.exports = {
     Canvas.GlobalFonts.registerFromPath('./medias/calendrier/impact.ttf', 'Impact')
     Canvas.GlobalFonts.registerFromPath('./medias/calendrier/franklin.ttf', 'Franklin')
 
-    let data = args.get("data").value.split(" ~ ")
+    let data = args.get("data").value.split('~')
 
     let taille_titre_y = 317
     let marge_titre_y = 178
@@ -61,9 +61,13 @@ module.exports = {
     context.fillText(title_text, (canvas.width / 2) - (context.measureText(title_text).width / 2), 290)
     context.drawImage(await Canvas.loadImage('./medias/calendrier/titre.png'), 0, 0)
 
-
     for (let event in data) {
+
+      console.log(" data ------ \n" + event)
+      
       event_data = data[event].split("  ")
+
+      console.log(" event_data ------ \n" + event_data)
       
       pos_text_y = (taille_titre_y + (marge_titre_y * 2)) + 72 + ((taille_event_y + marge_event_y) * event)
 
