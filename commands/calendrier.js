@@ -62,12 +62,8 @@ module.exports = {
     context.drawImage(await Canvas.loadImage('./medias/calendrier/titre.png'), 0, 0)
 
     for (let event in data) {
-
-      console.log(" data ------ \n" + data[event])
-      
+     
       event_data = data[event].split("  ")
-
-      console.log(" event_data ------ \n" + event_data)
       
       pos_text_y = (taille_titre_y + (marge_titre_y * 2)) + 72 + ((taille_event_y + marge_event_y) * event)
 
@@ -84,8 +80,8 @@ module.exports = {
 
       context.font = '62px Franklin'
       context.fillText("Organisé par", marge_x, pos_text_y + marge_eventdata_y * 4)
-      context.drawImage(await Canvas.loadImage('./medias/calendrier/ORGA/' + event_data[4].split("Organisé par ")[1] + '.png'), marge_orga_x, (pos_text_y + marge_eventdata_y * 4) - 59)
-      context.drawImage(await Canvas.loadImage('./medias/calendrier/QR/' + event_data[4].split("Organisé par ")[1] + '.png'), taille_img_x - marge_x - taille_qr_xy, (pos_text_y + marge_eventdata_y * 4) - taille_qr_xy, taille_qr_xy, taille_qr_xy)
+      context.drawImage(await Canvas.loadImage('./medias/calendrier/ORGA/' + event_data[4].split("Organisé par ")[1].slice(0, -2) + '.png'), marge_orga_x, (pos_text_y + marge_eventdata_y * 4) - 59)
+      context.drawImage(await Canvas.loadImage('./medias/calendrier/QR/' + event_data[4].split("Organisé par ")[1].slice(0, -2) + '.png'), taille_img_x - marge_x - taille_qr_xy, (pos_text_y + marge_eventdata_y * 4) - taille_qr_xy, taille_qr_xy, taille_qr_xy)
 
     }
     return await message.editReply({ content: "C'est bon.", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'calendrier.png' })]})
