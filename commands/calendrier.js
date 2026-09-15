@@ -62,8 +62,6 @@ module.exports = {
     context.drawImage(await Canvas.loadImage('./medias/calendrier/titre.png'), 0, 0)
 
     for (let event in data) {
-
-      console.log("DATA : " + data)
      
       event_data = data[event].split("  ")
 
