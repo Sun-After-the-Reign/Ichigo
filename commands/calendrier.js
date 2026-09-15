@@ -66,9 +66,7 @@ module.exports = {
       if(data[event] == "") break
      
       event_data = data[event].split("  ")
-
-      console.log("event_data : " + data[event])
-      
+     
       pos_text_y = (taille_titre_y + (marge_titre_y * 2)) + 72 + ((taille_event_y + marge_event_y) * event)
 
       context.font = '90px Impact'
