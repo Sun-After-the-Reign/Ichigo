@@ -71,12 +71,12 @@ module.exports = {
 
       context.font = '90px Impact'
       context.fillStyle = '#e54d00'
-      context.fillText(event_data[0], marge_x, pos_text_y)
+      context.fillText(event_data[0].replace('\n',''), marge_x, pos_text_y)
 
       context.font = '72px Franklin'
       context.fillStyle = '#ffffff'
 
-      context.fillText(event_data[1].replace('\n',''), marge_x, pos_text_y + marge_eventdata_y * 1)
+      context.fillText(event_data[1], marge_x, pos_text_y + marge_eventdata_y * 1)
       context.fillText(event_data[2], marge_x, pos_text_y + marge_eventdata_y * 2)
       context.fillText(event_data[3], marge_x, pos_text_y + marge_eventdata_y * 3)
 
