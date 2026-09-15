@@ -63,7 +63,7 @@ module.exports = {
 
     for (let event in data) {
 
-      console.log(" data ------ \n" + event)
+      console.log(" data ------ \n" + data[event])
       
       event_data = data[event].split("  ")
 
