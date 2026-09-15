@@ -46,7 +46,7 @@ module.exports = {
     let taille_qr_xy = 307
 
     let taille_img_x = 2480
-    let taille_img_y = taille_titre_y + (marge_titre_y * 2) + 44 + (taille_event_y + marge_event_y) * data.length -1
+    let taille_img_y = taille_titre_y + (marge_titre_y * 2) + 44 + (taille_event_y + marge_event_y) * (data.length - 1)
     let marge_x = 132
 
     let canvas = Canvas.createCanvas(taille_img_x, taille_img_y)
