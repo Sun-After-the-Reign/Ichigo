@@ -62,8 +62,12 @@ module.exports = {
     context.drawImage(await Canvas.loadImage('./medias/calendrier/titre.png'), 0, 0)
 
     for (let event in data) {
+
+      console.log("DATA : " + data)
      
       event_data = data[event].split("  ")
+
+      console.log("event_data : " + data[event])
       
       pos_text_y = (taille_titre_y + (marge_titre_y * 2)) + 72 + ((taille_event_y + marge_event_y) * event)
 
