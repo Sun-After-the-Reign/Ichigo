@@ -137,8 +137,14 @@ async function computeImage(bot, tournament, qr) {
 
   let response1 = await request1.json()
   let response2 = await request2.json()
+  let response3 = null
 
-  let matches = response1.data
+  if (response1.meta.count > 200) {
+    let request3 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/matches.json?community_id=sunafterthereign&per_page=300&page=2", requestOptions)
+    response3 = await request3.json()
+  }
+
+  let matches = response3 ? response1.data.concat(...response3.data) : response1.data
   let participants = response2.data.filter(p => p.attributes.final_rank <= 8 && p.attributes.final_rank != null).sort((a, b) => a.attributes.final_rank != b.attributes.final_rank ? a.attributes.final_rank - b.attributes.final_rank : a.attributes.name - b.attributes.name)
 
   for (let player of participants) {
