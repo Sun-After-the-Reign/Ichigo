@@ -40,7 +40,7 @@ module.exports = {
     let msg = `## Résultats du ${tournament.dataValues.tournament_name} pour les clans.\n`
 
     let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-    let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
+    let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=300", requestOptions)
     let response = await request.json()
 
     let participants_size = response.data.filter(p => p.attributes.final_rank != null).length

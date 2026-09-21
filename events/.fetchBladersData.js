@@ -5,9 +5,9 @@ module.exports = {
   async run(bot, community, tournament) {
 
     let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-    let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=" + community + "&per_page=200", requestOptions)
-
+    let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=" + community + "&per_page=300", requestOptions)
     let participants = await request.json()
+
     let users = participants.included.filter(u => u.type === "user")
 
     for (let participant of participants.data) {

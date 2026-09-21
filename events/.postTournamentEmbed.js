@@ -29,7 +29,7 @@ module.exports = {
 
       if (tournament.dataValues.tournament_challonge) {
         let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
+        let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=300", requestOptions)
         let participants = await request.json()
         participantsNumber = tournament.dataValues.tournament_ruleset == "Team Battle" ? participants.data.filter(p => p.attributes.final_rank != null).length * 3 : tournament.dataValues.tournament_ruleset == "2vs2" ? participants.data.filter(p => p.attributes.final_rank != null).length * 2 : participants.data.filter(p => p.attributes.final_rank != null).length
       }

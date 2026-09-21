@@ -1,7 +1,7 @@
 {
   "name": "ichigo",
-  "version": "4.8.2",
-  "description": "Discord BOT for Sun After The Reign, a Beyblade X Community. ",
+  "version": "4.8.4",
+  "description": "Discord BOT for Sun After The Reign, a Beyblade X Community.",
   "main": "ichigo.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shishi42/Ichigo.git"
+    "url": "git+https://github.com/Sun-After-the-Reign/Ichigo.git"
   },
   "keywords": [
     "bot",
@@ -21,9 +21,9 @@
   "author": "Shishi42",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Shishi42/Ichigo/issues"
+    "url": "https://github.com/Sun-After-the-Reign/Ichigo/issues"
   },
-  "homepage": "https://github.com/Shishi42/Ichigo#readme",
+  "homepage": "https://github.com/Sun-After-the-Reign/Ichigo#readme",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.65",
     "cron": "^3.1.7",

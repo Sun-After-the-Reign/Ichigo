@@ -132,8 +132,8 @@ async function computeImage(bot, tournament, qr) {
   context.fillStyle = '#ffffff'
 
   let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
-  let request1 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/matches.json?community_id=sunafterthereign&per_page=200", requestOptions)
-  let request2 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=200", requestOptions)
+  let request1 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/matches.json?community_id=sunafterthereign&per_page=300", requestOptions)
+  let request2 = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=300", requestOptions)
 
   let response1 = await request1.json()
   let response2 = await request2.json()
