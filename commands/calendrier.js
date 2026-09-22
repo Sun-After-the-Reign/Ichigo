@@ -81,9 +81,14 @@ module.exports = {
       context.fillText(event_data[3], marge_x, pos_text_y + marge_eventdata_y * 3)
 
       context.font = '62px Franklin'
-      context.fillText("Organisé par", marge_x, pos_text_y + marge_eventdata_y * 4)
-      context.drawImage(await Canvas.loadImage('./medias/calendrier/ORGA/' + event_data[4].split("Organisé par ")[1].slice(0, -1) + '.png'), marge_orga_x, (pos_text_y + marge_eventdata_y * 4) - 59)
-      context.drawImage(await Canvas.loadImage('./medias/calendrier/QR/' + event_data[4].split("Organisé par ")[1].slice(0, -1) + '.png'), taille_img_x - marge_x - taille_qr_xy, (pos_text_y + marge_eventdata_y * 4) - taille_qr_xy, taille_qr_xy, taille_qr_xy)
+
+      try {
+        context.drawImage(await Canvas.loadImage('./medias/calendrier/ORGA/' + event_data[4].split("Organisé par ")[1].slice(0, -1) + '.png'), marge_orga_x, (pos_text_y + marge_eventdata_y * 4) - 59)
+        context.drawImage(await Canvas.loadImage('./medias/calendrier/QR/' + event_data[4].split("Organisé par ")[1].slice(0, -1) + '.png'), taille_img_x - marge_x - taille_qr_xy, (pos_text_y + marge_eventdata_y * 4) - taille_qr_xy, taille_qr_xy, taille_qr_xy)
+        context.fillText("Organisé par", marge_x, pos_text_y + marge_eventdata_y * 4)
+      } catch (err) {
+        context.fillText(event_data[4], marge_x, pos_text_y + marge_eventdata_y * 4)
+      }
 
     }
     return await message.editReply({ content: "C'est bon.", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'calendrier.png' })]})
