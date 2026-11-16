@@ -68,6 +68,13 @@ module.exports = {
     },
     {
       type: "string",
+      name: "link",
+      description: "Special link to the tournament",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
       name: "poster",
       description: "Poster URL to display",
       required: false,
@@ -105,7 +112,7 @@ module.exports = {
         { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
         { name: ':small_orange_diamond: Règlement', value: `${args.get("ruleset").value}`},
         { name: ':small_orange_diamond: Format', value: `${args.get("format").value}`},
-        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + tournament_id },
+        { name: ':small_orange_diamond: Lien', value: args.get("link") ? args.get("link").value : "https://challonge.com/" + tournament_id } ,
       )
 
     let row = new Discord.ActionRowBuilder()
@@ -128,7 +135,7 @@ module.exports = {
 
         let challonge = ""
 
-        if (args.get("format").value != "Training"){
+        if (args.get("format").value != "Training" && !args.get("link")) {
         
           let raw = JSON.stringify({
             "data": {
@@ -173,7 +180,7 @@ module.exports = {
             tournament_role: "",
             tournament_poster: poster,
             tournament_status: "Inscriptions en cours",
-            tournament_challonge: challonge,
+            tournament_challonge: args.get("link") ? args.get("link").value : challonge,
             tournament_season: bot.season,
           })
 
@@ -197,7 +204,7 @@ module.exports = {
           let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament)
           await bot.Tournaments.update({ tournament_message: post.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
-          await publishTournament(bot, tournament_id, args.get("post_pub").value)
+          await publishTournament(bot, tournament_id, args.get("post_pub").value, args.get("link") ? args.get("link").value : null)
           
           return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
         }).start()
@@ -209,7 +216,7 @@ module.exports = {
   }
 }
 
-async function publishTournament(bot, id, post) {
+async function publishTournament(bot, id, post, link) {
 
   let channel = await bot.channels.fetch(post)
 
@@ -237,11 +244,11 @@ async function publishTournament(bot, id, post) {
   msg += `:map: Lieu : ${place.dataValues.place_name}, ${place.dataValues.place_city}` + "\n"
   msg += `:bar_chart: Format : ${tournament.dataValues.tournament_format}` + "\n"
   msg += `:scroll: Règlement : ${tournament.dataValues.tournament_ruleset}` + "\n"
-  msg += `:globe_with_meridians: Lien : https://challonge.com/${tournament.dataValues.tournament_id}` + "\n"
+  msg += `:globe_with_meridians: Lien : ${link ? link : "https://challonge.com/" + tournament.dataValues.tournament_id}` + "\n"
 
   msg += "\n"
 
-  msg += `-# Merci d'indiquer votre participation sur le [Challonge](https://challonge.com/${tournament.dataValues.tournament_id}) afin que nous puissions estimer au mieux la taille du tournoi.`
+  msg += `-# Merci d'indiquer votre participation à cette [page](${link ? link : "https://challonge.com/" + tournament.dataValues.tournament_id}) afin que nous puissions estimer au mieux la taille du tournoi.`
 
   return await channel.send({ content: msg, files: medias })
 }

@@ -60,6 +60,13 @@ module.exports = {
     },
     {
       type: "string",
+      name: "link",
+      description: "Special link to the tournament",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
       name: "poster",
       description: "Poster URL to display",
       required: false,
@@ -101,6 +108,7 @@ module.exports = {
     if (args.get("ruleset")) bot.Tournaments.update({ tournament_ruleset: args.get("ruleset").value }, { where: { tournament_id: id } })      
     if (args.get("format")) bot.Tournaments.update({ tournament_format: args.get("format").value }, { where: { tournament_id: id } })      
     if (args.get("place")) bot.Tournaments.update({ tournament_place: args.get("place").value }, { where: { tournament_id: id } })
+    if (args.get("link")) bot.Tournaments.update({ tournament_challonge: args.get("link").value }, { where: { tournament_id: id } })
     if (args.get("poster")) bot.Tournaments.update({ tournament_poster: args.get("poster").value }, { where: { tournament_id: id } })
     if (args.get("status")) bot.Tournaments.update({ tournament_status: args.get("status").value }, { where: { tournament_id: id } })
     if (args.get("challonge")){
