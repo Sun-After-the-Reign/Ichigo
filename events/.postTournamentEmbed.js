@@ -7,9 +7,7 @@ module.exports = {
 
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
     let channel = await bot.channels.fetch(place.dataValues.place_inscr.split('/')[5])
-
-    console.log(tournament.dataValues.tournament_name)
-    
+   
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL() })
