@@ -23,12 +23,12 @@ module.exports = {
         { name: ':small_orange_diamond: Lien', value: tournament.dataValues.tournament_organization == "SAtRB" ? tournament.dataValues.tournament_challonge : "https://challonge.com/" + tournament.dataValues.tournament_id },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
       )
-      
+
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 
       let participantsNumber = "N/A"
 
-      if (tournament.dataValues.tournament_challonge) {
+      if (tournament.dataValues.tournament_challonge && tournament.dataValues.tournament_organization != "SAtRB") {
         let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
         let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=300", requestOptions)
         let participants = await request.json()
@@ -49,17 +49,20 @@ module.exports = {
       )
     }
 
-    let row = new Discord.ActionRowBuilder().addComponents(
-      new Discord.ButtonBuilder()
-        .setLabel("Inscription")
-        .setStyle(Discord.ButtonStyle.Link)
-        .setURL("https://challonge.com/" + tournament.dataValues.tournament_id),
-      new Discord.ButtonBuilder()
-        .setLabel("Recevoir les notifications")
-        .setStyle(Discord.ButtonStyle.Primary)
-        .setEmoji('🔔')
-        .setCustomId(`tournament-notify-${tournament.dataValues.tournament_id}`)
-    )
+    let row = ""
+    if (tournament.dataValues.tournament_format != "training") {
+      row = new Discord.ActionRowBuilder().addComponents(
+        new Discord.ButtonBuilder()
+          .setLabel("Inscription")
+          .setStyle(Discord.ButtonStyle.Link)
+          .setURL(tournament.dataValues.tournament_organization == "SAtRB" ? tournament.dataValues.tournament_challonge : "https://challonge.com/" + tournament.dataValues.tournament_id),
+        new Discord.ButtonBuilder()
+          .setLabel("Recevoir les notifications")
+          .setStyle(Discord.ButtonStyle.Primary)
+          .setEmoji('🔔')
+          .setCustomId(`tournament-notify-${tournament.dataValues.tournament_id}`)
+      )
+    }
 
     if (!update) return await channel.send({ content: "", embeds: [embed], components: [row]})
     else {
