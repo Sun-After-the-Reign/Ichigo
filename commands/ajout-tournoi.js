@@ -177,7 +177,7 @@ module.exports = {
             tournament_season: bot.season,
           })
 
-          let event = await message.guild.scheduledEvents.create({
+          await message.guild.scheduledEvents.create({
             name: args.get("title").value,
             scheduledStartTime: new Date(parseInt(Math.floor(date))),
             scheduledEndTime: new Date(parseInt(Math.floor(date)) + (3600 * 5)),
@@ -195,7 +195,7 @@ module.exports = {
           })
 
           let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament)
-          await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
+          await bot.Tournaments.update({ tournament_message: post.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
           await publishTournament(bot, tournament_id, args.get("post_pub").value)
           
