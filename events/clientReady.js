@@ -125,10 +125,6 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    place_maps: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     place_inscr: {
       type: Sequelize.STRING,
       allowNull: false,
