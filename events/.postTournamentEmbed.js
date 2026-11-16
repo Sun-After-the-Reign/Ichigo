@@ -49,8 +49,8 @@ module.exports = {
       )
     }
 
-    let row = ""
-    if (tournament.dataValues.tournament_format != "training") {
+    let row = null
+    if (tournament.dataValues.tournament_format != "Training") {
       row = new Discord.ActionRowBuilder().addComponents(
         new Discord.ButtonBuilder()
           .setLabel("Inscription")
@@ -64,10 +64,10 @@ module.exports = {
       )
     }
 
-    if (!update) return await channel.send({ content: "", embeds: [embed], components: [row]})
+    if (!update) return await channel.send({ content: "", embeds: [embed], components: row ? [row] : [] })
     else {
       if (tournament.dataValues.tournament_status != "Inscriptions en cours") return await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ content: "", embeds: [embed], components: [] }))
-      else await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ content: "", embeds: [embed], components: [row] }))
+      else await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ content: "", embeds: [embed], components: row ? [row] : [] }))
     }
   }
 }
