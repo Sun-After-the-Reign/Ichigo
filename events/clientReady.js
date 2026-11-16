@@ -11,9 +11,9 @@ module.exports = async bot => {
     "instagram": "https://www.instagram.com/sunafterthereign",
     "twitter": "https://x.com/SunAfterTheBey",
     "youtube": "https://www.youtube.com/@SunAftertheReign",
-    "liens": "https://sunafterthereign.carrd.co",
-    "data" : "Base de données des produits Beyblade X : https://docs.google.com/spreadsheets/d/1Wshh88T0oDORXXr4F7xVYK0cjBRMXYJE5KzoPjss_no",
-    "tournoi": "Sun After the Reign organise un tournoi tous les mois, le Beyblade Battle Tournament. Si une date n'est pas encore annoncée, alors ça arrivera bientôt dans https://discord.com/channels/1221611301332193371/1255960593563910306",
+    "liens": "https://link.sunafterthereign.fr/all",
+    "data" : "https://docs.google.com/spreadsheets/d/1Wshh88T0oDORXXr4F7xVYK0cjBRMXYJE5KzoPjss_no",
+    "tournoi": "## Sun After the Reign organise un tournoi tous les mois, le Beyblade Battle Tournament.\nSi une date n'est pas encore annoncée, alors ça arrivera bientôt dans https://discord.com/channels/1221611301332193371/1255960593563910306",
   }
 
   bot.regles = {
@@ -97,9 +97,6 @@ module.exports = async bot => {
     tournament_third: {
       type: Sequelize.STRING,
     },
-    tournament_event: {
-      type: Sequelize.STRING,
-    },
   })
   bot.Places = bot.db.define("place", {
     place_id: {
@@ -129,10 +126,6 @@ module.exports = async bot => {
       allowNull: false,
     },
     place_maps: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    place_info: {
       type: Sequelize.STRING,
       allowNull: false,
     },
