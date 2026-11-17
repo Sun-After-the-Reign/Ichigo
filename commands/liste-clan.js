@@ -15,13 +15,6 @@ module.exports = {
       required: true,
       autocomplete: true,
     },
-    {
-      type: "string",
-      name: "only_alive",
-      description: "Montrer que les joueurs en vie",
-      required: false,
-      autocomplete: false,
-    }
   ],
 
   async run(bot, message, args) {
@@ -36,7 +29,7 @@ module.exports = {
     let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=300", requestOptions)
     let response = await request.json()
 
-    let participants = args.get("only_alive") ? response.data.filter(p => p.attributes.name.includes(" | ") && p.attributes.final_rank == null) : response.data.filter(p => p.attributes.name.includes(" | "))
+    let participants = response.data.filter(p => p.attributes.name.includes(" | "))
 
     let clans = Array.from(new Set(participants.map(p => p.attributes.name.split(" | ")[0]))).sort()
 
