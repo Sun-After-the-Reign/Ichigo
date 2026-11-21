@@ -55,7 +55,7 @@ module.exports = {
         new Discord.ButtonBuilder()
           .setLabel("Inscription")
           .setStyle(Discord.ButtonStyle.Link)
-          .setURL(tournament.dataValues.tournament_organization == "SAtRB" ? tournament.dataValues.tournament_challonge : "https://challonge.com/" + tournament.dataValues.tournament_id),
+          .setURL(tournament.dataValues.tournament_challonge.includes("start.gg") ? tournament.dataValues.tournament_challonge : "https://challonge.com/" + tournament.dataValues.tournament_id),
         new Discord.ButtonBuilder()
           .setLabel("Recevoir les notifications")
           .setStyle(Discord.ButtonStyle.Primary)
