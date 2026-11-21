@@ -20,7 +20,7 @@ module.exports = {
         { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
         { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
         { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
-        { name: ':small_orange_diamond: Lien', value: tournament.dataValues.tournament_organization == "SAtRB" ? tournament.dataValues.tournament_challonge : "https://challonge.com/" + tournament.dataValues.tournament_id },
+        { name: ':small_orange_diamond: Lien', value: tournament.dataValues.tournament_challonge.includes("start.gg") ? tournament.dataValues.tournament_challonge : "https://challonge.com/" + tournament.dataValues.tournament_id },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
       )
 
@@ -28,7 +28,7 @@ module.exports = {
 
       let participantsNumber = "N/A"
 
-      if (tournament.dataValues.tournament_challonge && tournament.dataValues.tournament_organization != "SAtRB") {
+      if (tournament.dataValues.tournament_challonge && !tournament.dataValues.tournament_challonge.includes("start.gg")) {
         let requestOptions = { method: 'GET', headers: bot.myHeaders, redirect: 'follow' }
         let request = await fetch("https://api.challonge.com/v2.1/tournaments/" + tournament.dataValues.tournament_challonge + "/participants.json?community_id=sunafterthereign&per_page=300", requestOptions)
         let participants = await request.json()
