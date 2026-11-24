@@ -37,6 +37,13 @@ module.exports = {
       required: false,
       autocomplete: false,
     },
+    {
+      type: "string",
+      name: "media",
+      description: "le lien vers un média",
+      required: false,
+      autocomplete: false,
+    },
   ],
 
   async run(bot, message, args) {
@@ -51,6 +58,9 @@ module.exports = {
     let ping = tournament.dataValues.tournament_role
     let title = tournament.dataValues.tournament_name
 
+    let medias = []
+    if (args.get("media")) medias.push({ attachment: args.get("media").value })
+      
     let annonces = {
       "Rappel": `-# <@&${ping}>\n## Rappel concernant le __${title.toUpperCase()}__ à ${place.dataValues.place_name.toUpperCase()}, ${place.dataValues.place_number} ${place.dataValues.place_road} à ${place.dataValues.place_city}.\n\n- À PARTIR DE **12h30** :\n  - Accueil des joueurs, c'est le moment de prendre votre **consommation obligatoire** pour participer.\n  - Début des inscriptions, merci de venir vous inscrire avec la **preuve d'achat** de votre consommation.\n  - Merci de nous indiquer directement si vous êtes déjà inscrit sur Challonge, ou si vous souhaitez le faire à cet instant.\n  -# L'inscription sur Challonge est obligatoire pour obtenir un classement, mais une inscription avec un simple nom de Blader sur place est possible.\n- À **13h30** :\n  - Fin des inscriptions et génération de l'arbre des matchs du tournoi.\n  - Discours de début de tournoi, point sur l'organisation et sur les règles.\n- VERS **14h00**\n  - Début des matchs\n  -# Pour vous organiser, les matchs seront joués **dans l'ordre numérique** du [**Challonge**](https://challonge.com/${id}).\n- AUTOUR DE **19h30**\n  - Fin des matchs et remise des prix.\n  - Discours de fin et fin de l'événement.\n### Attention ! Nous n'attendrons pas les retardataires, afin de ne pas bousculer l'organisation des matchs. Nous clôturerons les inscriptions à 13h30.\nEn attendant merci de bien relire https://discord.com/channels/1221611301332193371/1221671605348864031, et de suivre https://discord.com/channels/1221611301332193371/1221670844279947316`,
       "RappelTeam": `-# @everyone\n## Rappel concernant le __${title.toUpperCase()}__ à ${place.dataValues.place_name.toUpperCase()}, ${place.dataValues.place_number} ${place.dataValues.place_road} à ${place.dataValues.place_city}.\n\n- À PARTIR DE **12h30** :\n  - Accueil des joueurs, c'est le moment de prendre votre **consommation obligatoire** pour participer.\n  - Début des inscriptions, merci de venir vous inscrire **EN ÉQUIPE DE 3 COMPLÈTE** avec vos **preuves d'achat** de vos consommation.\n  - Merci de monter à l'étage uniquement une fois votre équipe entièrement constituée et de réserver le RDC pour les recrutements de dernière minute.\n  -# Aucune équipe ne sera inscrite si elle n'est pas composée de 3 bladers.\n  - Merci de bien nous indiquer directement si vous êtes déjà inscrit sur Challonge, ou si vous souhaitez le faire à cet instant.\n- À **13h30** :\n  - Fin des inscriptions et génération de l'arbre des matchs du tournoi.\n  - Discours de début de tournoi, point sur l'organisation et sur les règles.\n- VERS **14h00**\n  - Début des matchs\n  -# Pour vous organiser, les matchs seront joués **dans l'ordre numérique** du [**Challonge**](https://challonge.com/${id}).\n- AUTOUR DE **19h30**\n  - Fin des matchs et remise des prix.\n  - Discours de fin et fin de l'événement.\n### Attention ! Nous n'attendrons pas les retardataires, afin de ne pas bousculer l'organisation des matchs. Nous clôturerons les inscriptions à 13h30.\nEn attendant merci de bien relire https://discord.com/channels/1221611301332193371/1221671605348864031, et de suivre https://discord.com/channels/1221611301332193371/1221670844279947316`,
@@ -63,11 +73,11 @@ module.exports = {
     if (annonces[args.get("annonce").value]) {
       if (args.get("date")){     
         let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
-        new cron.CronJob(datetime, () => { message.channel.send(annonces[args.get("annonce").value] ) }).start()
+        new cron.CronJob(datetime, () => { message.channel.send({ content: annonces[args.get("annonce").value], files: medias })}).start()
         return await message.reply({ content: `C'est bon, l'annonce seront envoyées le __<t:${Math.floor(datetime) / 1000}:d> à <t:${Math.floor(datetime) / 1000}:T> (<t:${Math.floor(datetime) / 1000}:R>)__.`, ephemeral: true })
       } else {
-        await message.channel.send(annonces[args.get("annonce").value] )
-        return await message.reply({content: "C'est bon.", ephemeral: true})
+        await message.channel.send({ content: annonces[args.get("annonce").value], files: medias })
+        return await message.reply({ content: "C'est bon.", ephemeral: true })
       }
     } else return await message.reply({ content: "Pas de d'annonces disponibles à ce nom.", ephemeral: true })
   }
