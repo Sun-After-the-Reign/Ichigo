@@ -72,8 +72,11 @@ module.exports = {
     let second = args.get("second").value
     let third = args.get("third").value
   
-    bot.Tournaments.update({ tournament_first: first, tournament_second: second, tournament_third: third, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
-    if (args.get("delete_role")) message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
+    bot.Tournaments.update({ tournament_first: first, tournament_second: second, tournament_third: third, tournament_status: "Tournoi fini", tournament_event: ""}, { where: { tournament_id: id }})
+    if (args.get("delete_role")) {
+      bot.Tournaments.update({ tournament_role: "" }, { where: { tournament_id: id } })
+      message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
+    }
         
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
     await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
